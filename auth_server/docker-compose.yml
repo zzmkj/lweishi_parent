@@ -1,0 +1,14 @@
+version: '3.6'
+
+services:
+  web:
+    image: 127.0.0.1:5000/ippse-oauth-server:latest
+    ports:
+    - "7001:7001"
+    networks:
+      ippse:
+        aliases:
+        - ippse-oauth-server
+networks:
+  ippse:
+    external: true

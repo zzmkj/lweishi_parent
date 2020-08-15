@@ -3,7 +3,7 @@ package com.lweishi.wx.auth.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lweishi.wx.auth.constant.WxConstant;
-import com.lweishi.wx.auth.domain.User;
+import com.lweishi.wx.auth.domain.WxUser;
 import com.lweishi.wx.auth.service.UserService;
 import com.lweishi.wx.auth.utils.HttpClientUtils;
 import com.lweishi.wx.auth.utils.JwtUtils;
@@ -70,8 +70,8 @@ public class WxController {
         //调用jwt工具类的方法。根据request对象获取头信息，返回用户id
         String memberId = JwtUtils.getMemberIdByJwtToken(request);
         //查询数据库根据用户id获取用户信息
-        User user = userService.findById(memberId);
-        return UnifyResult.ok().data("userInfo",user);
+        WxUser wxUser = userService.findById(memberId);
+        return UnifyResult.ok().data("userInfo", wxUser);
     }
 
 }

@@ -1,0 +1,1808 @@
+/*logo字体图标*/
+@font-face {
+    font-family: 'openkx';
+    src: url('../fonts/openkx.eot?lyyojp');
+    src: url('../fonts/openkx.eot?lyyojp#iefix') format('embedded-opentype'),
+    url('../fonts/openkx.ttf?lyyojp') format('truetype'),
+    url('../fonts/openkx.woff?lyyojp') format('woff'),
+    url('../fonts/openkx.svg?lyyojp#openkx') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'openkx' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-boNiLQhu6:before {
+    content: "\e900";
+}
+
+/*层级关系：头部98层、左侧滑蒙板99层、左侧滑100层、主体部分其他内容不得超过98层*/
+/*为body设置了绝对定位是为了flex布局，尚未发现问题，main为主体容器flex1页脚置底方案有待观察*/
+/*main的宽度因为padding值少了185，使用newtainer重写了响应解决溢出来*/
+.newtainer {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .newtainer {
+        max-width: 750px;
+    }
+}
+
+@media (max-width: 768px) {
+    .newtainer {
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 992px) {
+    .newtainer {
+        max-width: 970px;
+    }
+}
+
+@media (max-width: 992px) {
+    .info_card .card, .placeholder-border {
+        max-width: 530px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .newtainer {
+        max-width: 1170px;
+    }
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: 0;
+}
+
+input {
+    outline: none;
+}
+
+.shadow_z1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.shadow_z2 {
+    box-shadow: 0 8px 17px rgba(0, 0, 0, 0.25);
+}
+
+.btn-primary {
+    background: #2196f3;
+    border-color: #3884c6;
+}
+
+.btn-primary:hover {
+    background-color: #2088da;
+    border-color: #204d74;
+}
+
+.mg0 {
+    margin: 0 !important;
+}
+
+.pl0 {
+    padding-left: 0 !important;
+}
+
+.btn {
+    font-size: 13px;
+}
+
+.full-width {
+    max-width: 100%;
+    width: 100%;
+}
+
+.layout_drawer, .main_drawer {
+    height: calc(100% - 64px);
+    width: 185px;;
+    transform: translateX(0);
+    position: fixed;
+    top: 64px;
+    left: 0;
+    box-sizing: border-box;
+    transition-duration: .2s;
+}
+
+.layout_drawer {
+    transform: translateX(-185px);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    border-right: 1px solid #e0e0e0;
+    background: #fff;
+    z-index: 97;
+}
+
+.layout_drawer .head {
+    height: 64px;
+    line-height: 64px;
+    font-size: 20px;
+    font-weight: 400;
+    padding-left: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.layout_drawer.is-visible {
+    transform: translateX(0);
+}
+
+.layout_obfuscator {
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 99;
+    visibility: hidden;
+    opacity: 0;
+    transition-property: background-color;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+}
+
+.layout_obfuscator.is-visible {
+    pointer-events: auto;
+    opacity: 1;
+    background-color: transparent;
+    visibility: hidden;
+}
+
+.layout_drawer.main_drawer {
+    transform: translateX(0);
+    box-shadow: none;
+    background: transparent;
+    border: 0;
+}
+
+.layout_drawer.main_drawer.is-visible {
+    transform: translateX(-185px);
+}
+
+.layout_drawer.main_drawer .drawer-menu li a {
+    background: transparent !important;
+}
+
+.layout_drawer.main_drawer .drawer-menu li ul.inmenu {
+    padding: 0;
+    list-style: none;
+    display: none;
+}
+
+.layout_drawer.main_drawer .drawer-menu li ul.inmenu.open {
+    display: block;
+}
+
+.layout_drawer.main_drawer .drawer-menu li ul.inmenu li a {
+    padding-left: 76px;
+    background: transparent !important;
+    text-decoration: none;
+}
+
+.layout_drawer.main_drawer .drawer-menu li ul.inmenu li.on a {
+    color: #2196f3;
+}
+
+.layout_drawer.main_drawer .drawer-menu li a .caret {
+    position: absolute;
+    right: 8px;
+    top: 21px;
+}
+
+@media (max-width: 768px) {
+    .layout_drawer.main_drawer {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+        border-right: 1px solid #e0e0e0;
+        background: #fff;
+        transform: translateX(-270px);
+    }
+
+    .layout_drawer.main_drawer.is-visible {
+        transform: translateX(0);
+    }
+
+    .layout_drawer.main_drawer .drawer-menu li a {
+        padding-left: 16px;
+    }
+
+    .layout_drawer.main_drawer .drawer-menu li a .caret {
+        right: 16px;
+    }
+
+    .layout_drawer.main_drawer .drawer-menu li ul.inmenu li a {
+        padding-left: 66px;
+    }
+}
+
+.caret {
+    border-top: 4px dashed #909090;
+}
+
+.caret.open {
+    border-top: 0;
+    border-bottom: 4px dashed #909090;
+}
+
+.layout_drawer.main_drawer .drawer-menu li ul.inmenu li.on a:before {
+    content: "";
+    position: absolute;
+}
+
+.header {
+    background-color: #2196f3;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    height: 64px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    padding: 0 16px 0 75px;
+}
+
+.top-menu {
+    float: right;
+    margin: 0;
+    padding: 0;
+    height: 64px;
+    line-height: 64px;
+}
+
+.top-menu .mitem .header_userimg {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+}
+
+.myInfo {
+    padding: 12px 12px 12px 115px;
+    position: relative;
+}
+
+.myphoto {
+    font-size: 12px;
+    height: 96px;
+    left: 8px;
+    line-height: 20px;
+    position: absolute;
+    top: 12px;
+    width: 96px;
+}
+
+.userhead {
+    border-radius: 50%;
+    height: 96px;
+    overflow: hidden;
+    position: relative;
+    width: 96px;
+}
+
+.userhead img {
+    border-radius: 50%;
+}
+
+.userhead a {
+    display: block;
+}
+
+.change-userhead {
+    background: rgba(0, 0, 0, 0.54) none repeat scroll 0 0;
+    bottom: 0;
+    color: #fff;
+    font-size: 9px;
+    font-weight: bold;
+    left: 0;
+    line-height: 9px;
+    padding: 7px 0;
+    position: absolute;
+    text-align: center;
+    width: 96px;
+}
+
+.myshow {
+    line-height: 24px;
+}
+
+.myname {
+    color: #000;
+    font-weight: bold;
+    word-break: break-all;
+    min-height: 24px;
+}
+
+.Email {
+    color: #666;
+    min-height: 24px;
+    word-break: break-all;
+}
+
+.signature {
+    color: #a9a9a9;
+    margin-bottom: 10px;
+    min-height: 20px;
+    word-break: break-all;
+    font-size: 12px;
+}
+
+.top-menu .mitem {
+    display: inline-block;
+    vertical-align: middle;
+    height: 36px;
+}
+
+.top-menu .mitem .mitema i {
+    vertical-align: middle;
+}
+
+.top-menu .mitem .mitema i, .top-menu .mitem .mitema span {
+    position: relative;
+    z-index: 1;
+}
+
+.top-menu .mitem .mitema:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.12);
+    transform: scale3d(0, 0, 0);
+    transition: all 250ms ease 0s;
+    left: 0;
+    top: 0;
+}
+
+.mitem.open a:before, .btn-group.open a:before {
+    transform: scale3d(1, 1, 1) !important;
+}
+
+.top-menu .mitem .mitema:hover:before {
+    transform: scale3d(1, 1, 1);
+}
+
+.top-menu .mitem .mitema {
+    display: block;
+    color: #fff;
+    padding: 0 13px;
+    line-height: 36px;
+    position: relative;
+    z-index: 1;
+    text-decoration: none;
+}
+
+.drawer_button i {
+    position: relative;
+    z-index: 1;
+}
+
+.drawer_button {
+    display: block;
+    height: 48px;
+    width: 48px;
+    border: 0;;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+    font-size: 26px;
+    line-height: 56px;
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 8px 12px;
+    top: 0;
+    left: 0;
+    color: #fff;
+    position: absolute;
+    z-index: 3;
+    border-radius: 50%;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+.drawer_button:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+}
+
+.drawer_button:hover:before {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.drawer_button:active:before {
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.logo {
+    position: relative;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: .02em;
+    font-weight: 400;
+    box-sizing: border-box;
+    float: left;
+    height: 64px;
+    line-height: 64px;
+}
+
+.logo a, .logo a:hover {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 100;
+}
+
+.logo span {
+    display: inline-block;
+    color: white;
+    font-size: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+    transition: 1s;
+}
+
+.logo a:hover span {
+    transform: rotate(-240deg);
+}
+
+@media (max-width: 768px) {
+    .header {
+        z-index: 97;
+    }
+
+    .layout_drawer {
+        transform: translateX(-268px);
+        top: 0;
+        width: 268px;
+        z-index: 100;
+        height: 100%;
+        background: #fff;
+        overflow: auto;
+    }
+
+    /*	.layout_drawer.is-visible{transform: translateX(0);}*/
+    .layout_obfuscator.is-visible {
+        pointer-events: auto;
+        opacity: 1;
+        visibility: visible;
+        background-color: rgba(0, 0, 0, .5);
+    }
+}
+
+.dropright {
+    left: auto;
+    right: 0;
+}
+
+.lv-header {
+    border-bottom: 1px solid #f0f0f0;
+    color: #4c4c4c;
+    font-weight: 500;
+    line-height: 100%;
+    padding: 15px 10px 13px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.lv-header a {
+    position: absolute;
+    top: 13px;
+    right: 8px;
+    color: #adadad;
+}
+
+.lv-header a i {
+    font-size: 20px;
+}
+
+.lv-body {
+    min-height: 295px;
+    overflow-x: hidden;
+}
+
+.lv-footer {
+    border-top: 1px solid #f0f0f0;
+    color: #828282;
+    display: block;
+    font-size: 11px;
+    line-height: 100%;
+    padding: 7px 10px 8px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.dropdown-menu-lg {
+    width: 300px;
+}
+
+#top-search-wrap {
+    background: #fff none repeat scroll 0 0;
+    height: 64px;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: -64px;
+    transition: all 300ms ease 0s;
+    width: 100%;
+    z-index: 10;
+}
+
+.search-toggled #top-search-wrap {
+    opacity: 1;
+    top: 0;
+}
+
+.tsw-inner {
+    display: block;
+    margin: 0 auto;
+    max-width: 700px;
+    padding: 12px;
+    position: relative;
+}
+
+.tsw-inner form {
+    line-height: 1;
+}
+
+#top-search-wrap #top-search-close {
+    border-radius: 2px 0 0 2px;
+    cursor: pointer;
+    font-size: 23px;
+    font-style: normal;
+    height: 40px;
+    line-height: 40px;
+    right: 13px;
+    position: absolute;
+    text-align: center;
+    width: 45px;
+    color: #5e5e5e;
+}
+
+#top-search-wrap #top-search-close:hover {
+    background: #ddd;
+}
+
+#top-search-wrap input[type="text"] {
+    background-color: #efefef;
+    border: 0 none;
+    border-radius: 2px;
+    font-size: 15px;
+    height: 40px;
+    padding: 0 60px 0 10px;
+    width: 100%;
+}
+
+.drawer-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+}
+
+.drawer-menu li {
+    /*height: 45px;*/
+    line-height: 45px;
+}
+
+.drawer-menu li a {
+    display: block;
+    padding-left: 26px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
+    position: relative;
+    text-decoration: none;
+}
+
+.drawer-menu li a.on {
+    color: #2196f3 !important;
+}
+
+.layout_drawer .drawer-menu li.on a {
+    background: #f6f6f6;
+}
+
+.layout_drawer .drawer-menu li a:hover {
+    color: #2196f3 !important;
+}
+
+.layout_drawer .drawer-menu li a:hover > i {
+    color: #2196f3 !important;
+}
+
+/*.drawer-menu li.on a:before{
+    content: "";
+    background: #2196f3;
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    left: 0;
+    top: 0;
+}*/
+.drawer-menu li.on a i {
+    color: #2196f3;
+}
+
+.drawer-menu li a i {
+    font-size: 20px;
+    transform: translateY(5px);
+    margin-right: 30px;
+    color: #909090;
+}
+
+.main {
+    padding: 80px 0 0 201px;
+    flex: 1;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.home-add {
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
+    right: 15px;
+    bottom: 20px;
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    line-height: 45px;
+    background-color: #f44336;
+    border: 0;
+    outline: none;
+    font-size: 23px;
+    z-index: 98;
+}
+
+.home-add i {
+    transition: all 500ms ease 0s;
+}
+
+.home-add:hover i {
+    transform: rotate(360deg);
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding: 80px 0 0 0;
+    }
+}
+
+/*分页*/
+.pagination i {
+    font-size: 20px;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #2196f3;
+    border-color: #337ab7;
+}
+
+.pagination > li > a, .pagination > li > span {
+    background-color: #e2e2e2;
+    border: 1px solid #ffffff;
+    border-radius: 50% !important;
+    color: #7e7e7e;
+    cursor: pointer;
+    float: left;
+    font-size: 14px;
+    height: 40px;
+    line-height: 1.42857;
+    margin-left: -1px;
+    padding: 9px 12px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    width: 40px;
+    z-index: 1;
+}
+
+.pagination {
+    border-radius: 2px;
+    display: inline-block;
+    margin: 18px 0;
+    padding-left: 0;
+}
+
+.pagination > li > a, .pagination > li > span {
+    border: 1px solid #ffffff;
+    border-radius: 50% !important;
+    float: left;
+    font-size: 14px;
+    height: 40px;
+    line-height: 1.42857;
+    padding: 9px 12px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    width: 40px;
+    z-index: 1;
+}
+
+.pagination > li {
+    display: inline-block;
+    margin: 0 2px;
+    vertical-align: top;
+}
+
+/*分页end
+/*页脚*/
+.footer {
+    text-align: center;
+    width: 100%;
+    color: #a2a2a2;
+    padding-top: 35px;
+    padding-bottom: 15px;
+    font-size: 12px;
+}
+
+.footer .f-menu {
+    display: block;
+    width: 100%;
+    padding-left: 0;
+    list-style: none;
+    margin-left: -5px;
+    margin-top: 8px;
+}
+
+.footer .f-menu > li {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.footer .f-menu > li > a {
+    color: #a2a2a2;
+    text-decoration: none;
+}
+
+.footer .f-menu > li > a:hover {
+    color: #777;
+}
+
+/*页脚end*/
+/*小发布框*/
+.placeholder-border {
+    background-color: #f8f8f8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 12px 0 30px;
+}
+
+.placeholder {
+    background-color: white;
+    border: 1px solid #e4e4e4;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04) inset;
+    color: #404040;
+    cursor: text;
+    display: block;
+    font-size: 13px;
+    height: 60px;
+    margin-left: 0;
+    padding: 10px 0 0 10px;
+}
+
+/*小发布框end*/
+
+/*大发布框*/
+.info_card .card.large-box {
+    background: #fff none repeat scroll 0 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+    margin-top: 12px;
+    position: relative;
+    display: none;
+}
+
+.info_card .card-tip {
+    padding: 25px 20px;
+}
+
+.info_card .card-tip > a {
+    cursor: pointer;
+    color: #555;
+    font-size: 13px;
+}
+
+.info_card .Iconsright {
+    float: right;
+    position: absolute;
+    cursor: pointer;
+    right: 13px;
+    top: 26px;
+}
+
+.info_card .Iconsright a {
+    color: #555;
+}
+
+.info_card .Iconsright i {
+    font-size: 18px;
+}
+
+.info_card li.dropdown.action-more {
+    position: absolute;
+    right: -5px;
+    top: 0px;
+    list-style: none;
+}
+
+.info_card .card-textarea {
+    padding: 23px 26px;
+}
+
+.info_card .card-textarea .wp-text {
+    border: 0;
+    padding: 0;
+    display: block;
+    width: 100%;
+    resize: none;
+    outline: none;
+    color: #404040;
+    height: 58px;
+    font-size: 13px;
+}
+
+.info_card .bottomIcon {
+    margin: 0px -23px;
+    border-bottom: 1px solid #eee;
+}
+
+.info_card .bottomIcon ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 0 8px;
+    cursor: pointer;
+}
+
+.info_card .bottomIcon a {
+    color: #848484;
+}
+
+.info_card .bottomIcon ul li i {
+    font-size: 20px;
+}
+
+.info_card .bottomIcon .choseList {
+    position: absolute;
+    top: 160px;
+    left: 185px;
+}
+
+.info_card .bottomIcon .choseList .form-control {
+    height: 32px !important;
+    margin-top: 10px;
+    padding: 6px 6px;
+    font-size: 12px;
+}
+
+.info_card .push-button {
+    text-align: right;
+    padding: 10px 10px;
+}
+
+.info_card .push-button button {
+    font-size: 12px;
+}
+
+.info_card .push-button .sendBtn {
+    color: #fff;
+    background-color: #2196f3;
+    border: none;
+    font-size: 12px;
+}
+
+/*大发布框end*/
+
+/*首页文章卡片*/
+.info_card .card {
+    background: #fff none repeat scroll 0 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+    margin-top: 12px;
+    position: relative;
+}
+
+.info_card .cardTop {
+    border-bottom: 0 none;
+    color: #427fed;
+    padding: 15px 20px 0;
+}
+
+.info_card .cardTop .cardTopTitle {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 0 0 11px;
+    position: relative;
+}
+
+.info_card .card_header ul.actions.right-menu {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    list-style: none;
+}
+
+.info_card .card_header ul.actions.right-menu i {
+    color: #5e5e5e;
+}
+
+.info_card .card_header ul.actions.right-menu i:hover {
+    background-color: #e5e5e5;
+    border-radius: 50px;
+    transition: all 300ms ease 0s;
+}
+
+.info_card .card_header .dropdown-menu > li > a {
+    margin: 5px;;
+    font-size: 13px;
+}
+
+.info_card .cardTop .cardTopTitle .bar {
+    padding-right: 16px;
+    min-height: 18px;
+}
+
+.info_card .cardTop .cardTopTitle .bar a {
+    font-size: 12px;
+    color: #555;
+    text-decoration: none;
+}
+
+.info_card .cardTop .cardTopTitle .bar .material-icons {
+    background-size: contain;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 20px;
+    color: #F44336;
+}
+
+.info_card .card_header {
+    margin-bottom: 20px;
+    padding: 0 20px;
+    position: relative;
+}
+
+.info_card .card_header .face img {
+    float: left;
+    margin: 20px 15px 0 0;
+    padding: 0;
+    border-radius: 50%;
+    height: 46px;
+    width: 46px;
+}
+
+.info_card .card_header .right {
+    margin: 0 0 0 61px;
+    padding: 23px 0 0;
+    text-overflow: ellipsis;
+}
+
+.info_card .card_header .right .userheader .userName a {
+    font-weight: bold;
+    color: #262626;
+    text-decoration: none !important;
+}
+
+.info_card .card_header .right .userheader .stateInfo {
+    color: #999;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.info_card .card_header .right .userheader .shareState {
+    color: #999;
+    display: inline-block;
+    font-size: 12px;
+    text-decoration: none !important;
+}
+
+.info_card .content_card {
+    padding: 0 20px 20px 20px;
+}
+
+.info_card .content_card .Jcontent {
+    max-height: 61px;
+    overflow: hidden;
+}
+
+.info_card .content_card .Jcontent .index-title {
+    font-size: 14px !important;
+    margin-bottom: 5px !important;
+}
+
+.info_card .content_card .Jcontent .content-title {
+    text-align: center;
+    font-weight: 700;
+    color: rgb(94, 94, 94);
+}
+
+.info_card .content_card .Jtext {
+    padding: 0 10px;
+    font-size: 12px;
+    color: rgb(94, 94, 94);
+}
+
+.info_card .actionBlock {
+    padding: 15px 20px;
+    margin: 0;
+    text-align: left;
+}
+
+.info_card .actionBlock .praise {
+    background-color: #fff;
+    background-image: none;
+    border-radius: 3px;
+    cursor: pointer;
+    float: left;
+    height: 28px;
+    line-height: 28px;
+    margin-left: 8px;
+    padding: 0 10px;
+    width: auto;
+}
+
+.info_card .actionBlock .praise span.line {
+    color: #262626;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    opacity: 0.7;
+    padding-right: 14px;
+    line-height: 12px;
+}
+
+.info_card .actionBlock .forward span.line .material-icons {
+    transform: scaleX(-1);
+    vertical-align: bottom;
+    font-size: 23px;
+    color: #676767;
+}
+
+.info_card .comment {
+    background-color: #f8f8f8;
+    border-radius: 0 0 2px 2px;
+}
+
+.info_card .comment .borderTop {
+    border-top: 1px solid #e5e5e5;
+    padding-bottom: 16px;
+}
+
+.info_card .comment .commentNum {
+    border-bottom: medium none;
+    border-top: medium none;
+    margin: 0 20px 12px;
+    padding: 0;
+}
+
+.info_card .comment .com {
+    color: #262626;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+    height: 25px;
+    line-height: 25px;
+}
+
+.info_card .comment .com .word {
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.info_card .comment .com .icon {
+    display: inline-block;
+    margin-top: 0;
+    vertical-align: top;
+    transform: translateY(3px);
+}
+
+.info_card .comment .com .icon i {
+    opacity: 0.7;
+    font-size: 20px;
+}
+
+.info_card .commentBox .userimage {
+    float: left;
+    margin-left: -38px;
+}
+
+.info_card .commentBox .comment-form {
+    padding-left: 45px;
+}
+
+.info_card .commentBox {
+    margin: 0 20px;
+    padding: 0 0 20px;
+}
+
+.info_card .commentBox .box, .commentBoxFull .box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    color: #999;
+    cursor: text;
+    font-size: 12px;
+    height: auto;
+    margin: 0;
+    padding: 6px 8px;
+}
+
+.info_card .commentBox .sendBtn {
+    color: #fff;
+    background-color: #2196f3;
+    border: none;
+    font-size: 12px;
+}
+
+.info_card .commentBox .cancelBtn {
+    color: rgba(0, 0, 0, 0.87);
+    background-color: #e5e5e5;
+    border: none;
+    font-size: 12px;
+}
+
+/*首页文章卡片end
+/*卡片右上角菜单*/
+.mdl-card__menu.dropright {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+}
+
+.mdl-card__menu button {
+    border-radius: 50%;
+    font-size: 24px;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+    line-height: 1;
+    background-color: transparent;
+    outline: none;
+    border: 0;
+}
+
+.mdl-card__menu button i {
+    vertical-align: middle;
+}
+
+.mdl-card__menu button:hover {
+    background-color: rgba(158, 158, 158, .2);
+}
+
+.mdl-card__menu button .white i {
+    color: #fff;
+}
+
+.mdl-card__menu button .black i {
+    color: rgb(94, 94, 94);
+}
+
+.bottomIcon ul li i {
+    font-size: 20px;
+}
+
+.bottomIcon ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 0 8px;
+    cursor: pointer;
+}
+
+.info_card .bottomIcon a {
+    color: #848484;
+}
+
+.bottomIcon a {
+    color: #848484;
+}
+
+.comment-ul {
+    list-style: none;
+}
+
+.comment-ul li {
+    margin-bottom: 10px;
+}
+
+.userimage {
+    float: left;
+    margin-left: -38px;
+}
+
+.userdiv .user-info {
+    margin-bottom: 4px;
+    line-height: 1;
+}
+
+.userdiv .name, .userdiv .time {
+    display: inline-block;
+}
+
+.userdiv .time {
+    color: #999;
+    float: right;
+    font-size: 13px;
+}
+
+/*卡片右上角菜单*/
+
+/*课程卡片*/
+.course .card {
+    background: #fff none repeat scroll 0 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    margin-bottom: 0px;
+    margin-top: 30px;
+    position: relative;
+}
+
+.course .breadcrumb {
+    padding-left: 0px;
+    text-align: left;
+    border-bottom: 0px;
+    margin: 8px 0px;
+    background-color: initial;
+    border-bottom: 1px solid #e5e5e5;
+    opacity: 0.7;
+}
+
+.course .breadcrumb > li {
+    display: inline-block;
+    color: rgba(0, 0, 0, 0.541176);
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.course .breadcrumb > li a {
+    color: rgb(169, 169, 169);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.course .card .tab-nav {
+    list-style: none;
+    padding: 15px 0;
+    white-space: nowrap;
+    margin: 0;
+    margin-top: -8px;
+    overflow: auto;
+    box-shadow: inset 0 -2px 0 0 #eeeeee;
+    width: 100%;
+}
+
+.course .tab-nav li {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.course .tab-nav li a {
+    color: #777;
+}
+
+.course .tab-nav li.active > a {
+    color: #000;
+    text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .tab-nav li > a {
+        padding: 15px 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .course .tab-nav li.active > a {
+        padding: 15px 0;
+    }
+
+    .tab-nav li > a {
+        padding: 15px 10px;
+    }
+}
+
+.course .tab-nav li.active > a {
+    border-bottom: 2px solid #2196f3;
+}
+
+.course .lv-header-alt {
+    position: relative;
+    background: #f8f8f8;
+    padding: 15px;
+}
+
+.course .lvh-label {
+    color: #818181;
+    display: inline-block;
+    margin: 0;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0 6px;
+    line-height: 33px;
+    vertical-align: middle;
+    float: left;
+}
+
+.course .profile-view .pv-body {
+    margin-top: 20px;
+    padding: 0 20px 20px;
+}
+
+.course .profile-view .pv-header {
+    position: relative;
+    height: 145px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.course .profile-view .pv-body > h2 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 25px;
+    width: 100%;
+    display: block;
+    font-size: 20px;
+    margin: 0;
+    line-height: 100%;
+    font-weight: 400;
+}
+
+.course .profile-view .pv-body > h2 a {
+    text-decoration: none;
+    color: #222;
+}
+
+.course .profile-view .pv-info {
+    color: #8e8e8e;
+    height: 20px;
+    margin-top: 15px;
+}
+
+.estate.red {
+    color: #F44336;
+    font-size: 16px;
+    vertical-align: middle;
+    cursor: pointer;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.pv-info .p-r-5 {
+    padding-right: 8px;
+}
+
+.course .profile-view .pv-body > small {
+    display: block;
+    color: #777;
+    margin: 18px 0 5px;
+    height: 33px;
+    overflow: hidden;
+    font-size: 12px;
+}
+
+.pv-body button.btn.btn-primary {
+    background: #00bcd4;
+    color: #fff;
+    border-radius: 3px;
+    margin-top: 16px;
+    border: none;
+    padding: 8px 18px;
+}
+
+.detailMenu ul.actions.right-menu {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    z-index: 2;
+    list-style: none;
+}
+
+.detailMenu ul.actions.right-menu i {
+    color: #fff;
+}
+
+.home .home-add {
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
+    right: 30px;
+    bottom: 30px;
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    line-height: 55px;
+    background-color: #2196f3;
+    border: 0;
+    outline: none;
+    font-size: 23px;
+    z-index: 999;
+}
+
+.home .home-add i {
+    transition: all 500ms ease 0s;
+}
+
+/*课程卡片end*/
+
+/*创建课程表单*/
+.creat .formCard {
+    position: relative;
+}
+
+.creat .formCard .formHeader {
+    border: medium none;
+    height: 140px;
+    margin: 30px 0 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.creat .formCard .formHeader .tip i {
+    cursor: pointer;
+    margin-right: 10px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 5px;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+}
+
+.creat .formCard .formHeader .tip span {
+    font-size: 18px;
+    transform: translateY(-3px);
+}
+
+.creat .formCard .formHeader .tip {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+    box-sizing: border-box;
+    color: #fff;
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+    font-size: 22px;
+}
+
+.creat .formCard .formHeader img {
+    height: auto;
+    width: 100%;
+}
+
+.creat .formCard .formHeader .changePhoto {
+    background-color: rgba(0, 0, 0, 0.26);
+    border-radius: 50%;
+    bottom: 12px;
+    color: #fff;
+    height: 40px;
+    min-width: 40px;
+    overflow: hidden;
+    position: absolute;
+    right: 12px;
+    width: 40px;
+    border: none;
+    font-size: 20px;
+    text-align: center;
+    line-height: 10px;
+}
+
+.creat .formCard .formHeader .changePhoto i {
+    font-size: 18px;
+}
+
+.formBody .tab-content {
+    padding: 20px 0;
+}
+
+.formBody .userFace img {
+    border-radius: 50%;
+    height: 96px;
+    left: 20px;
+    position: absolute;
+    top: 88px;
+    width: 96px;
+    border: 4px solid #fff;
+}
+
+.course_body input.form-control {
+    font-size: 13px;
+}
+
+.course_body textarea.form-control {
+    font-size: 13px;
+    margin-top: 20px;
+}
+
+.creat.card .text-right {
+    margin-top: 20px;
+}
+
+.creat.card .choseList .form-control {
+    height: 32px !important;
+    margin-top: 18px;
+    padding: 6px 6px;
+    font-size: 12px;
+    width: 6%;
+}
+
+.creat.card .checkbox {
+    padding-left: 96px;
+    margin-top: -25px;
+}
+
+@media (max-width: 1200px) {
+    .creat.card .choseList .form-control {
+        width: 100%;
+    }
+
+    .creat.card .checkbox {
+        padding-left: 3px;
+        margin-top: 18px;
+    }
+}
+
+/*创建课程表单end*/
+
+/*页面内小头部上的搜索按钮*/
+.lvh-search {
+    background: #fff none repeat scroll 0 0;
+    /* display: none; */
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 4;
+}
+
+.lvh-search:before {
+    content: "\e003";
+    font-family: 'Glyphicons Halflings';
+    font-size: 14px;
+    left: 24px;
+    position: absolute;
+    top: 22px;
+    color: #818181;
+}
+
+/*页面内小头部上的搜索按钮 end*/
+
+/*用户个人资料*/
+.user-information .card {
+    /* 	cursor: pointer; */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.user-information .card .user-banner {
+    overflow: hidden;
+    height: 300px;
+}
+
+.user-information .card .user-logo-box {
+    position: absolute;
+    top: 232px;
+    width: 250px;
+    left: 50%;
+    margin-left: -125px;
+}
+
+.user-information .card .user-logo-box .user-logo {
+    border: 4px solid #fff;
+    width: 136px;
+    height: 136px;
+    border-radius: 50%;
+}
+
+.user-information .card .user-data-box {
+    background-color: #fff;
+    height: auto;
+    padding: 0 30px;
+}
+
+.user-information .card .user-data-box .user-data {
+    padding-top: 68px;
+    padding-bottom: 20px;
+}
+
+.user-data .user-name {
+    color: #a9a9a9;
+    font-size: 17px;
+    padding-bottom: 16px;
+}
+
+.user-data .user-data-name {
+    color: #a9a9a9;
+    font-size: 17px;
+    padding: 5px;
+}
+
+.user-data .user-data-value {
+    font-size: 17px;
+    padding: 5px;
+}
+
+.hr-style {
+    width: 70%;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.caret {
+    border-top: 4px dashed #ffffff;
+}
+
+/*用户个人资料end*/
+
+/*错误页面*/
+.error-view-style {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.error-view-style .error-code {
+    color: #999;
+    font-size: 200px;
+}
+
+.error-view-style .error-message {
+    color: #555;
+    font-size: 20px;
+}
+
+/*错误页面end*/
+/*friend*/
+@media (max-width: 1200px) {
+    .top-menu {
+        float: right;
+        margin: 0;
+        padding: 0;
+        height: 64px;
+    }
+
+}
+
+@media (min-width: 1200px) {
+    .user_config2 {
+        background-color: #fff;
+        width: 100%;
+        height: 218px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+        text-align: left;
+    }
+}
+
+@media (min-width: 990px) and (max-width: 1200px) {
+    select#add_friend {
+        position: absolute;
+        width: 114%;
+        margin-right: 9px;
+    }
+
+    select#group_invite {
+        position: absolute;
+        width: 114%;
+        margin-right: 9px;
+    }
+
+    select#events_invite {
+        position: absolute;
+        width: 114%;
+        margin-right: 9px;
+    }
+
+    select#person_data {
+        position: absolute;
+        width: 114%;
+        margin-right: 9px;
+    }
+
+    select#person_resume {
+        position: absolute;
+        width: 114%;
+        margin-right: 9px;
+    }
+
+    select#contact_info {
+        position: absolute;
+        width: 114%;
+        margin-right: 9px;
+    }
+}
+
+/*index*/
+.lv-header-alt.clearfix {
+    border-bottom: 1px solid #eee;
+    margin-right: 14px;
+}
+
+.ys-body-weeo {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    border-radius: 2px 0 0 2px;
+    border-bottom: 1px solid hsla(0, 0%, 59%, .1);
+}
+
+img.ys-staic {
+    width: 35%;
+    padding-bottom: 5px;
+}
+
+.detailMenu ul.actions.right-menu {
+    position: absolute;
+    right: 54px !important;
+    top: 4px !important;
+    list-style: none;
+}
+
+ul.actions.right-menu {
+    margin-top: 20px;
+}
+
+.lvh-label {
+    margin-top: 21px !important;
+}
+
+.card-contant p.writing {
+    font-size: 13px;
+    line-height: 30px;
+    color: #5e5e5e;
+    padding: 15px 0;
+    padding-right: 20px !important;
+}
+
+.lvh-label {
+    color: #818181;
+    font-weight: normal;
+    margin: 0;
+    vertical-align: middle;
+    padding-bottom: .3em;
+    font-size: 2.15em;
+    line-height: 1.2;
+    border-bottom: 1px solid #fff !important;
+}
+
+.info_detail.container {
+    background-color: #fff;
+    padding-left: 43px;
+}
