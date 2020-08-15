@@ -1,11 +1,10 @@
 package com.ippse.iot.authserver.controller;
 
+import com.ippse.iot.authserver.dao.UserRepository;
+import com.ippse.iot.authserver.util.UnifyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ippse.iot.authserver.dao.UserRepository;
-import com.ippse.iot.authserver.domain.User;
 
 @RestController
 public class UserController extends BaseApiController {
@@ -13,8 +12,8 @@ public class UserController extends BaseApiController {
     private UserRepository userRepository;
 
     @GetMapping("/user")
-    public User user() {
-        return sessuser;
+    public UnifyResult user() {
+        return UnifyResult.ok().data("user", sessuser);
     }
 
 	/*@GetMapping("/user/{userid}")

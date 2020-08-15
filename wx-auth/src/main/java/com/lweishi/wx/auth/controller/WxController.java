@@ -2,12 +2,12 @@ package com.lweishi.wx.auth.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.lweishi.utils.UnifyResult;
 import com.lweishi.wx.auth.constant.WxConstant;
 import com.lweishi.wx.auth.domain.WxUser;
-import com.lweishi.wx.auth.service.UserService;
+import com.lweishi.wx.auth.service.WxUserService;
 import com.lweishi.wx.auth.utils.HttpClientUtils;
 import com.lweishi.wx.auth.utils.JwtUtils;
-import com.lweishi.wx.auth.utils.UnifyResult;
 import com.lweishi.wx.auth.utils.WxUtils;
 import com.lweishi.wx.auth.vo.WxLoginVO;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class WxController {
     private WxConstant constant;
 
     @Autowired
-    private UserService userService;
+    private WxUserService wxUserService;
 
     @GetMapping("/auth/phone")
     public UnifyResult authPhone(String code, String encryptedData, String iv) throws Exception {
@@ -56,7 +56,7 @@ public class WxController {
                 throw new Exception("请求失败！用户未绑定手机号");
             }
             log.info("【openid】 = {}", openid);
-            WxLoginVO vo = userService.login(openid, phone);
+            WxLoginVO vo = wxUserService.login(openid, phone);
             log.info("【手机号】 = {}", phone);
             return UnifyResult.ok().data("userInfo", vo);
         } catch (Exception e) {
@@ -70,7 +70,7 @@ public class WxController {
         //调用jwt工具类的方法。根据request对象获取头信息，返回用户id
         String memberId = JwtUtils.getMemberIdByJwtToken(request);
         //查询数据库根据用户id获取用户信息
-        WxUser wxUser = userService.findById(memberId);
+        WxUser wxUser = wxUserService.findById(memberId);
         return UnifyResult.ok().data("userInfo", wxUser);
     }
 

@@ -1,4 +1,4 @@
-package com.lweishi.wx.auth.utils;
+package com.ippse.iot.authserver.util;
 
 /**
  * 定义返回码

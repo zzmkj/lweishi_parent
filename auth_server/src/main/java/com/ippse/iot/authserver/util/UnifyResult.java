@@ -1,6 +1,5 @@
-package com.lweishi.app.util;
+package com.ippse.iot.authserver.util;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -13,13 +12,9 @@ import java.util.Map;
  */
 @Data
 public class UnifyResult {
-    @ApiModelProperty(value = "是否成功")
     private Boolean success;
-    @ApiModelProperty(value = "返回码")
     private Integer code;
-    @ApiModelProperty(value = "返回消息")
     private String message;
-    @ApiModelProperty(value = "返回数据")
     private Map<String, Object> data = new HashMap<String, Object>();
 
     private UnifyResult() {}

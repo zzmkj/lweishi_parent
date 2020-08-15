@@ -10,6 +10,6 @@ import java.util.Optional;
  * @Author geek
  * @CreateTime 2020/7/4 18:47
  */
-public interface UserRepository extends JpaRepository<WxUser, String> {
+public interface WxUserRepository extends JpaRepository<WxUser, String> {
     Optional<WxUser> findByOpenid(String openid);
 }

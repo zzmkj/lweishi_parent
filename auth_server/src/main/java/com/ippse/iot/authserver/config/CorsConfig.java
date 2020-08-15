@@ -14,10 +14,10 @@ import org.springframework.web.filter.CorsFilter;
  * @Version 1.0
  */
 //跨域访问配置
-//@Configuration
+@Configuration
 public class CorsConfig {
 
-//    @Bean
+    @Bean
     public CorsFilter corsFilter() {
         //1.添加CORS配置信息
         CorsConfiguration config = new CorsConfiguration();

@@ -16,16 +16,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 @Configuration
 /*@EnableWebSecurity*/
@@ -79,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and()
 				//.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
-				.antMatchers("/actuator/**", "/login", "/exit", "/login/**", "/favicon.ico", "/swagger/**", "/").permitAll()
+				.antMatchers("/actuator/**", "/login", "/exit", "/login/**","/oauth/**", "/favicon.ico", "/swagger/**", "/").permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
 				.anyRequest().authenticated()
 				//.and().httpBasic()
@@ -96,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		log.info("开始WebSecurityConfig的WebSecurity");
 		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
-		web.ignoring().antMatchers("/actuator/health","/oauth/check_token", "/favicon.ico", "/css/**", "/js/**","/images/**", "/fonts/**","/dist/**");
+		web.ignoring().antMatchers("/actuator/health","/favicon.ico", "/css/**", "/js/**","/images/**", "/fonts/**","/dist/**");
 	}
 	
 	@Override
@@ -116,7 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-	@Bean
+/*	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("*"));
@@ -125,12 +120,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
-	}
+	}*/
 
-	@Bean
-	public CorsFilter corsFilter() {
-		return new CorsFilter(corsConfigurationSource());
-	}
+
 	/*@Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();

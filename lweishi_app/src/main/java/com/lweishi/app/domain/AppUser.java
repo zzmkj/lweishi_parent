@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class AppUser {
     @Id
     private String id;
 
@@ -27,6 +27,5 @@ public class User {
     private String password;
     private String name;
     private String avatar;
-    private String openid;
     private LocalDateTime createTime;
 }

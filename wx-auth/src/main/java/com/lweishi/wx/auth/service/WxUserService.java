@@ -1,8 +1,8 @@
 package com.lweishi.wx.auth.service;
 
+import com.lweishi.utils.IDUtil;
 import com.lweishi.wx.auth.domain.WxUser;
-import com.lweishi.wx.auth.repository.UserRepository;
-import com.lweishi.wx.auth.utils.IDUtil;
+import com.lweishi.wx.auth.repository.WxUserRepository;
 import com.lweishi.wx.auth.utils.JwtUtils;
 import com.lweishi.wx.auth.vo.WxLoginVO;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +19,13 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-public class UserService {
+public class WxUserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private WxUserRepository wxUserRepository;
 
     public Optional<WxUser> checkUserIsExist(String openid) {
-        return userRepository.findByOpenid(openid);
+        return wxUserRepository.findByOpenid(openid);
     }
 
     public WxLoginVO login(String openid, String mobile) {
@@ -37,10 +37,10 @@ public class UserService {
 
     public WxUser register(String openid, String name, String mobile, String avatar) {
         WxUser wxUser = new WxUser(IDUtil.UUID(), mobile, "liweishi", name, avatar, openid, LocalDateTime.now());
-        return userRepository.save(wxUser);
+        return wxUserRepository.save(wxUser);
     }
 
     public WxUser findById(String id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("没有找到该用户"));
+        return wxUserRepository.findById(id).orElseThrow(() -> new RuntimeException("没有找到该用户"));
     }
 }
