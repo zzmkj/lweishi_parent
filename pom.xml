@@ -7,6 +7,8 @@
         <module>phone_repair</module>
         <module>wx-auth</module>
         <module>lweishi_app</module>
+        <module>auth_server</module>
+        <module>lweishi_lib</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -1,6 +1,6 @@
 package com.lweishi.wx.auth.service;
 
-import com.lweishi.wx.auth.domain.User;
+import com.lweishi.wx.auth.domain.WxUser;
 import com.lweishi.wx.auth.repository.UserRepository;
 import com.lweishi.wx.auth.utils.IDUtil;
 import com.lweishi.wx.auth.utils.JwtUtils;
@@ -24,23 +24,23 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Optional<User> checkUserIsExist(String openid) {
+    public Optional<WxUser> checkUserIsExist(String openid) {
         return userRepository.findByOpenid(openid);
     }
 
     public WxLoginVO login(String openid, String mobile) {
-        Optional<User> userOptional = this.checkUserIsExist(openid);
-        User user = userOptional.orElseGet(() -> this.register(openid, "用户" + mobile, mobile, "https://zzm888.oss-cn-shenzhen.aliyuncs.com/default.png"));
-        String token = JwtUtils.getJwtToken(user.getId(), user.getName(), user.getAvatar());
-        return new WxLoginVO(token, user.getName(), user.getAvatar(), user.getMobile());
+        Optional<WxUser> userOptional = this.checkUserIsExist(openid);
+        WxUser wxUser = userOptional.orElseGet(() -> this.register(openid, "用户" + mobile, mobile, "https://zzm888.oss-cn-shenzhen.aliyuncs.com/default.png"));
+        String token = JwtUtils.getJwtToken(wxUser.getId(), wxUser.getName(), wxUser.getAvatar());
+        return new WxLoginVO(token, wxUser.getName(), wxUser.getAvatar(), wxUser.getMobile());
     }
 
-    public User register(String openid, String name, String mobile, String avatar) {
-        User user = new User(IDUtil.UUID(), mobile, "liweishi", name, avatar, openid, LocalDateTime.now());
-        return userRepository.save(user);
+    public WxUser register(String openid, String name, String mobile, String avatar) {
+        WxUser wxUser = new WxUser(IDUtil.UUID(), mobile, "liweishi", name, avatar, openid, LocalDateTime.now());
+        return userRepository.save(wxUser);
     }
 
-    public User findById(String id) {
+    public WxUser findById(String id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("没有找到该用户"));
     }
 }
