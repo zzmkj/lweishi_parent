@@ -21,7 +21,7 @@ import java.util.List;
  * @Description 品牌控制器
  */
 @RestController
-@RequestMapping("/admin/brand")
+@RequestMapping("/brand")
 public class BrandController {
 
     @Autowired

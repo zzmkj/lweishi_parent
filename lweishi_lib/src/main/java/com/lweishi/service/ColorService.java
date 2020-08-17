@@ -36,8 +36,11 @@ public class ColorService {
         return colorRepository.findAll(sort);
     }
 
-    public Page<Color> findAll(Pageable pageable) {
-        return colorRepository.findAll(pageable);
+    public Page<Color> findAll(Pageable pageable, String keyword) {
+        if (StringUtils.isBlank(keyword)) {
+            return colorRepository.findAll(pageable);
+        }
+        return colorRepository.findByNameLike("%" + keyword + "%", pageable);
     }
 
     public Color findById(String id) {

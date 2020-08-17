@@ -14,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ import java.util.List;
  * @Description 颜色控制器
  */
 @RestController
-@RequestMapping("/admin/color")
+@RequestMapping("/color")
 public class ColorController {
 
     @Autowired
@@ -35,9 +36,10 @@ public class ColorController {
     }
 
     @GetMapping("/page")
-    public UnifyResult findAll(@PageableDefault(page = 1, size = 10, direction = Sort.Direction.DESC, sort = "createTime") Pageable pageable) {
+    public UnifyResult findAll(@PageableDefault(page = 1, size = 10, direction = Sort.Direction.DESC, sort = "createTime") Pageable pageable,
+                               @RequestParam(name = "keyword", required = false, defaultValue = "") String keyword) {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), pageable.getSort());
-        Page<Color> pageData = colorService.findAll(pageRequest);
+        Page<Color> pageData = colorService.findAll(pageRequest, keyword);
         return UnifyResult.ok().data("pageData", pageData);
     }
 
@@ -48,7 +50,7 @@ public class ColorController {
     }
 
     @PostMapping("/save")
-    public UnifyResult save(@Validated ColorDTO colorDTO) {
+    public UnifyResult save(@Valid ColorDTO colorDTO) {
         Color color = colorService.save(colorDTO);
         return UnifyResult.ok().data("color", color);
     }

@@ -22,7 +22,7 @@ import java.util.Map;
  * @Description 一级故障控制器
  */
 @RestController
-@RequestMapping("/admin/fault")
+@RequestMapping("/fault")
 public class FaultController {
 
     @Autowired
