@@ -5,6 +5,7 @@ import com.lweishi.dto.ColorDTO;
 import com.lweishi.service.BrandService;
 import com.lweishi.service.ColorService;
 import com.lweishi.utils.UnifyResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,7 @@ import java.util.List;
  * @CreateTime 2020/8/7 23:21
  * @Description 颜色控制器
  */
+@Slf4j
 @RestController
 @RequestMapping("/color")
 public class ColorController {
@@ -50,15 +52,20 @@ public class ColorController {
     }
 
     @PostMapping("/save")
-    public UnifyResult save(@Valid ColorDTO colorDTO) {
+    public UnifyResult save(@Valid @RequestBody ColorDTO colorDTO) {
         Color color = colorService.save(colorDTO);
         return UnifyResult.ok().data("color", color);
     }
 
     @PutMapping("/update")
-    public UnifyResult update(@Validated ColorDTO colorDTO) {
+    public UnifyResult update(@Validated @RequestBody ColorDTO colorDTO) {
         Color color = colorService.update(colorDTO);
         return UnifyResult.ok().data("color", color);
     }
 
+    @GetMapping("/{id}")
+    public UnifyResult findById(@PathVariable String id) {
+        Color color = colorService.findById(id);
+        return UnifyResult.ok().data("color", color);
+    }
 }

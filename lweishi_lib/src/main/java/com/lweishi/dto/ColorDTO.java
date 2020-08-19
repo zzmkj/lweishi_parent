@@ -36,4 +36,7 @@ public class ColorDTO {
     @NotBlank(message = "图片不能为空")
     private String icon;
 
+    @NotBlank(message = "选中图片不能为空")
+    private String iconActive;
+
 }

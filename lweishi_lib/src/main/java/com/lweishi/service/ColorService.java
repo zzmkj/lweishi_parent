@@ -61,7 +61,7 @@ public class ColorService {
 
     public Color update(ColorDTO colorDTO) {
         if (StringUtils.isBlank(colorDTO.getId())) {
-            throw new GlobalException(ResultCode.ERROR, "更新品牌信息失败");
+            throw new GlobalException(ResultCode.ERROR, "更新颜色信息失败");
         }
         Color color = findById(colorDTO.getId());
         BeanUtils.copyProperties(colorDTO, color, BeanNullUtil.getNullPropertyNames(colorDTO));

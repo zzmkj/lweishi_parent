@@ -27,5 +27,7 @@ public class Color {
 
     private String icon;
 
+    private String iconActive;
+
     private LocalDateTime createTime;
 }

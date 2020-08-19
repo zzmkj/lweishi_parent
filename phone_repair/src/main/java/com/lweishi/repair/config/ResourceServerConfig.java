@@ -47,7 +47,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         log.info("开始ResourceServerConfig的HttpSecurity");
         http.cors().and().csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/webjars/**", "/error**", "/actuator/**", "/favicon.ico", "/swagger**", "/swagger**/**",
-                        "/register/**", "/register", "/login/**", "/public/**", "/dist/**")
+                        "/register/**", "/register", "/login/**", "/public/**", "/dist/**", "/upload/**")
                 .permitAll().anyRequest().authenticated().and().oauth2Login().authorizationEndpoint().and()
                 .userInfoEndpoint().customUserType(OkUser.class, "ippse").and().and().exceptionHandling()
                 .defaultAuthenticationEntryPointFor(unauthorizedHandler, new AjaxRequestMatcher());
