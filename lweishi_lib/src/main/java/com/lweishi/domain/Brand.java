@@ -36,7 +36,7 @@ public class Brand {
 
     /**
      * @FiledName: 图片
-     * @Description: 品牌商标
+     * @Description: 品牌封面
      */
     private String image;
 

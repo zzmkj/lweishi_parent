@@ -34,7 +34,7 @@ public class BrandController {
     }
 
     @GetMapping("/page")
-    public UnifyResult findAll(@PageableDefault(page = 1, size = 10, direction = Sort.Direction.DESC, sort = "createTime") Pageable pageable) {
+    public UnifyResult findAll(@PageableDefault(page = 1, size = 10, direction = Sort.Direction.ASC, sort = "sequence") Pageable pageable) {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), pageable.getSort());
         Page<Brand> pageData = brandService.findAll(pageRequest);
         return UnifyResult.ok().data("pageData", pageData);
@@ -47,14 +47,20 @@ public class BrandController {
     }
 
     @PostMapping("/save")
-    public UnifyResult save(@Validated BrandDTO brandDTO) {
+    public UnifyResult save(@Validated @RequestBody  BrandDTO brandDTO) {
         Brand brand = brandService.save(brandDTO);
         return UnifyResult.ok().data("brand", brand);
     }
 
     @PutMapping("/update")
-    public UnifyResult update(@Validated BrandDTO brandDTO) {
+    public UnifyResult update(@Validated @RequestBody BrandDTO brandDTO) {
         Brand brand = brandService.update(brandDTO);
+        return UnifyResult.ok().data("brand", brand);
+    }
+
+    @GetMapping("/{id}")
+    public UnifyResult findById(@PathVariable String id) {
+        Brand brand = brandService.findById(id);
         return UnifyResult.ok().data("brand", brand);
     }
 

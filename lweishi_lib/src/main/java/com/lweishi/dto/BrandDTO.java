@@ -38,9 +38,8 @@ public class BrandDTO {
 
     /**
      * @FiledName: 图片
-     * @Description: 品牌商标
+     * @Description: 品牌封面
      */
-    @NotBlank(message = "图片不能为空")
     private String image;
 
 }
