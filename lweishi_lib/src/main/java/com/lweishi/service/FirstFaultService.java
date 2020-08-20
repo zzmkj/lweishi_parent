@@ -33,6 +33,9 @@ public class FirstFaultService {
     @Autowired
     private FirstFaultRepository firstFaultRepository;
 
+    @Autowired
+    private SecondFaultService secondFaultService;
+
     public List<FirstFault> findAll() {
         Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
         return firstFaultRepository.findAll(sort);
@@ -47,6 +50,9 @@ public class FirstFaultService {
     }
 
     public void deleteById(String id) {
+        //根据一级故障ID，删除该所属的二级故障
+        secondFaultService.deleteByFaultId(id);
+        //删除一级故障
         firstFaultRepository.deleteById(id);
     }
 
@@ -73,7 +79,8 @@ public class FirstFaultService {
      * @return Tree-故障信息树
      */
     public List<FirstFault> findAllToTree(Map<String, List<SecondFault>> secondFaultMap) {
-        List<FirstFault> firstFaults = this.findAll();
+        Sort sort = Sort.by(Sort.Direction.ASC, "sequence");
+        List<FirstFault> firstFaults = firstFaultRepository.findAll(sort);
         firstFaults.forEach(firstFault -> {
             if (secondFaultMap.containsKey(firstFault.getId())) {
                 List<SecondFault> secondFaultList = secondFaultMap.get(firstFault.getId());

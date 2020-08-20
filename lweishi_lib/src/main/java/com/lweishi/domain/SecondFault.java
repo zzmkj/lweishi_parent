@@ -26,11 +26,15 @@ public class SecondFault {
 
     private String faultId; //一级故障id
 
-    private String name;
+    private String name; //故障名称
 
-    private Integer sequence;
+    private String description; //描述
 
-    private BigDecimal price;
+    private String expiration; //保修时间
+
+    private Integer sequence; //故障排序
+
+    private BigDecimal price; //故障价格
 
     private LocalDateTime createTime;
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,12 @@ public class FaultController {
         return UnifyResult.ok().data("faultList", faultList);
     }
 
+    @GetMapping("/first/{id}")
+    public UnifyResult findFirstById(@PathVariable String id) {
+        FirstFault fault = firstFaultService.findById(id);
+        return UnifyResult.ok().data("fault", fault);
+    }
+
     @DeleteMapping("/first/{id}")
     public UnifyResult deleteFirstFault(@PathVariable String id) {
         firstFaultService.deleteById(id);
@@ -45,13 +52,13 @@ public class FaultController {
     }
 
     @PostMapping("/first/save")
-    public UnifyResult saveFirstFault(@Validated FirstFaultDTO firstFaultDTO) {
+    public UnifyResult saveFirstFault(@Valid @RequestBody FirstFaultDTO firstFaultDTO) {
         FirstFault firstFault = firstFaultService.save(firstFaultDTO);
         return UnifyResult.ok().data("firstFault", firstFault);
     }
 
     @PutMapping("/first/update")
-    public UnifyResult update(@Validated FirstFaultDTO firstFaultDTO) {
+    public UnifyResult update(@Valid @RequestBody FirstFaultDTO firstFaultDTO) {
         FirstFault firstFault = firstFaultService.update(firstFaultDTO);
         return UnifyResult.ok().data("firstFault", firstFault);
     }
@@ -63,15 +70,21 @@ public class FaultController {
     }
 
     @PostMapping("/second/save")
-    public UnifyResult saveSecondFault(@Validated SecondFaultDTO secondFaultDTO) {
+    public UnifyResult saveSecondFault(@Valid @RequestBody SecondFaultDTO secondFaultDTO) {
         SecondFault secondFault = secondFaultService.save(secondFaultDTO);
         return UnifyResult.ok().data("secondFault", secondFault);
     }
 
     @PutMapping("/second/update")
-    public UnifyResult update(@Validated SecondFaultDTO secondFaultDTO) {
+    public UnifyResult update(@Valid @RequestBody SecondFaultDTO secondFaultDTO) {
         SecondFault secondFault = secondFaultService.update(secondFaultDTO);
         return UnifyResult.ok().data("secondFault", secondFault);
+    }
+
+    @GetMapping("/second/{id}")
+    public UnifyResult findSecondById(@PathVariable String id) {
+        SecondFault fault = secondFaultService.findById(id);
+        return UnifyResult.ok().data("fault", fault);
     }
 
 }

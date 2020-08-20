@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -51,10 +52,19 @@ public class SecondFaultService {
         secondFaultRepository.deleteById(id);
     }
 
+    /**
+     * 根据一级故障ID，删除该一级故障下的所有二级故障
+     * @param faultId 一级故障ID
+     */
+    public void deleteByFaultId(String faultId) {
+        secondFaultRepository.deleteByFaultId(faultId);
+    }
+
     public SecondFault save(SecondFaultDTO secondFaultDTO) {
         SecondFault secondFault = new SecondFault();
         BeanUtils.copyProperties(secondFaultDTO, secondFault);
         secondFault.setId(IDUtil.UUID());
+        secondFault.setPrice(new BigDecimal(0));
         secondFault.setCreateTime(LocalDateTime.now());
         return secondFaultRepository.save(secondFault);
     }
@@ -73,7 +83,8 @@ public class SecondFaultService {
      * @return Map结构，【Key是一级故障ID,Value是二级故障信息集合】
      */
     public Map<String, List<SecondFault>> findAllToMap() {
-        List<SecondFault> secondFaults = this.findAll();
+        Sort sort = Sort.by(Sort.Direction.DESC, "sequence");
+        List<SecondFault> secondFaults = secondFaultRepository.findAll(sort);
         Map<String, List<SecondFault>> secondFaultMap = secondFaults.stream().collect(
                 Collectors.toMap(SecondFault::getFaultId, Lists::newArrayList,
                         (List<SecondFault> newValueList, List<SecondFault> oldValueList) -> {

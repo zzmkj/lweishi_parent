@@ -58,7 +58,7 @@ public class ColorController {
     }
 
     @PutMapping("/update")
-    public UnifyResult update(@Validated @RequestBody ColorDTO colorDTO) {
+    public UnifyResult update(@Valid @RequestBody ColorDTO colorDTO) {
         Color color = colorService.update(colorDTO);
         return UnifyResult.ok().data("color", color);
     }

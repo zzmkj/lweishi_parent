@@ -28,8 +28,14 @@ public class SecondFaultDTO {
      * @Description: 二级故障名称
      * @Example: 国产屏，原产屏...
      */
-    @NotBlank(message = "二级故障名称不能为空")
+    @NotBlank(message = "故障名称不能为空")
     private String name;
+
+    @NotBlank(message = "描述不能为空")
+    private String description;
+
+    @NotBlank(message = "保修时间不能为空")
+    private String expiration;
 
     /**
      * @FiledName: 排序
@@ -37,9 +43,6 @@ public class SecondFaultDTO {
      */
     @Min(value = 0, message = "排序值格式有误")
     private Integer sequence;
-
-    @NotNull(message = "故障维修金额不能为空")
-    private BigDecimal price;
 
     @NotBlank(message = "一级故障id不能为空")
     private String faultId; //一级故障id
