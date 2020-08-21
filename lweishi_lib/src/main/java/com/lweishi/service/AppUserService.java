@@ -50,6 +50,12 @@ public class AppUserService {
     }
 
     public AppUser save(AppUserRegisterDTO appUserRegisterDTO) {
+        //检验手机号是否存在该用户
+        Optional<AppUser> userOptional = checkUserIsExist(appUserRegisterDTO.getMobile());
+        if (userOptional.isPresent()) {
+            //如果存在，抛出异常信息
+            throw new GlobalException(ResultCode.ERROR, "该手机号已经注册！");
+        }
         AppUser appUser = new AppUser(IDUtil.UUID(), appUserRegisterDTO.getMobile(), appUserRegisterDTO.getPassword(), appUserRegisterDTO.getName(), appUserRegisterDTO.getAvatar(), LocalDateTime.now());
         return appUserRepository.save(appUser);
     }
