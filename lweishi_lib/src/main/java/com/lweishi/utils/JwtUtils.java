@@ -1,4 +1,4 @@
-package com.lweishi.app.util;
+package com.lweishi.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -18,7 +18,7 @@ public class JwtUtils {
     public static final long EXPIRE = 1000 * 60 * 60 * 24;
     public static final String APP_SECRET = "ukc8BDbRigUDaY6pZFfWus2jZWLPHO";
 
-    public static String getJwtToken(String id, String nickname, String avatar){
+    public static String getAppJwtToken(String id, String nickname, String avatar){
 
         String JwtToken = Jwts.builder()
                 .setHeaderParam("typ", "JWT")

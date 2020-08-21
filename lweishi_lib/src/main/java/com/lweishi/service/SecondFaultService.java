@@ -1,7 +1,7 @@
 package com.lweishi.service;
 
 import com.google.common.collect.Lists;
-import com.lweishi.domain.SecondFault;
+import com.lweishi.model.SecondFault;
 import com.lweishi.dto.SecondFaultDTO;
 import com.lweishi.exception.GlobalException;
 import com.lweishi.repository.SecondFaultRepository;

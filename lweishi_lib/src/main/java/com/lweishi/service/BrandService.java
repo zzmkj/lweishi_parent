@@ -1,6 +1,6 @@
 package com.lweishi.service;
 
-import com.lweishi.domain.Brand;
+import com.lweishi.model.Brand;
 import com.lweishi.dto.BrandDTO;
 import com.lweishi.exception.GlobalException;
 import com.lweishi.repository.BrandRepository;
@@ -36,8 +36,11 @@ public class BrandService {
         return brandRepository.findAll(sort);
     }
 
-    public Page<Brand> findAll(Pageable pageable) {
-        return brandRepository.findAll(pageable);
+    public Page<Brand> findAll(Pageable pageable, String keyword) {
+        if (StringUtils.isBlank(keyword)) {
+            return brandRepository.findAll(pageable);
+        }
+        return brandRepository.findByNameLike("%" + keyword + "%", pageable);
     }
 
     public Brand findById(String id) {

@@ -1,10 +1,10 @@
 package com.lweishi.repository;
 
-import com.lweishi.model.Brand;
+import com.lweishi.model.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BrandRepository extends JpaRepository<Brand, String> {
-    Page<Brand> findByNameLike(String name, Pageable pageable);
+public interface BannerRepository extends JpaRepository<Banner, String> {
+    Page<Banner> findByNameLike(String name, Pageable pageable);
 }

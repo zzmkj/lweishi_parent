@@ -1,4 +1,4 @@
-package com.lweishi.domain;
+package com.lweishi.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

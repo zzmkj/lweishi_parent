@@ -1,11 +1,11 @@
-package com.lweishi.app.service;
+package com.lweishi.service;
 
-import com.lweishi.app.domain.AppUser;
-import com.lweishi.app.exception.GlobalException;
-import com.lweishi.app.repository.AppUserRepository;
-import com.lweishi.app.util.JwtUtils;
-import com.lweishi.app.vo.AppLoginVO;
+import com.lweishi.exception.GlobalException;
+import com.lweishi.model.AppUser;
+import com.lweishi.repository.AppUserRepository;
 import com.lweishi.utils.IDUtil;
+import com.lweishi.utils.JwtUtils;
+import com.lweishi.vo.AppLoginVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class AppUserService {
         if (!StringUtils.equals(password, appUser.getPassword())) {
             throw new GlobalException(30001, "用户名或者密码错误");
         }
-        String token = JwtUtils.getJwtToken(appUser.getId(), appUser.getName(), appUser.getAvatar());
+        String token = JwtUtils.getAppJwtToken(appUser.getId(), appUser.getName(), appUser.getAvatar());
         return new AppLoginVO(token, appUser.getName(), appUser.getAvatar(), appUser.getMobile());
     }
 

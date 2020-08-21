@@ -1,4 +1,4 @@
-package com.lweishi.domain;
+package com.lweishi.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,23 +11,27 @@ import java.time.LocalDateTime;
 
 /**
  * @Author geek
- * @CreateTime 2020/8/5 23:54
- * @Description 颜色
+ * @CreateTime 2020/8/21 19:07
+ * @Description 轮播图
  */
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Color {
+public class Banner {
     @Id
-    @Column(name = "id", length = 32, nullable = false, unique = true)
+    @Column(name = "id", length = 32, unique = true, nullable = false)
     private String id;
 
     private String name;
 
-    private String icon;
+    private String img;
 
-    private String iconActive;
+    private String link;
+
+    private Integer sequence;
+
+    private Boolean status; // 1：启用 ，0：停用
 
     private LocalDateTime createTime;
 }

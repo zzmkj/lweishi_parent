@@ -1,6 +1,6 @@
 package com.lweishi.service;
 
-import com.lweishi.domain.Color;
+import com.lweishi.model.Color;
 import com.lweishi.dto.ColorDTO;
 import com.lweishi.exception.GlobalException;
 import com.lweishi.repository.ColorRepository;

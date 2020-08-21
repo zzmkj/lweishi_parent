@@ -1,4 +1,4 @@
-package com.lweishi.app.vo;
+package com.lweishi.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

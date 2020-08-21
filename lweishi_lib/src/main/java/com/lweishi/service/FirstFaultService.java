@@ -1,7 +1,7 @@
 package com.lweishi.service;
 
-import com.lweishi.domain.FirstFault;
-import com.lweishi.domain.SecondFault;
+import com.lweishi.model.FirstFault;
+import com.lweishi.model.SecondFault;
 import com.lweishi.dto.FirstFaultDTO;
 import com.lweishi.exception.GlobalException;
 import com.lweishi.repository.FirstFaultRepository;

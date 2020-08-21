@@ -1,16 +1,13 @@
 package com.lweishi.repair.controller;
 
-import com.lweishi.domain.Color;
-import com.lweishi.domain.FirstFault;
-import com.lweishi.domain.SecondFault;
+import com.lweishi.model.FirstFault;
+import com.lweishi.model.SecondFault;
 import com.lweishi.dto.FirstFaultDTO;
 import com.lweishi.dto.SecondFaultDTO;
-import com.lweishi.service.ColorService;
 import com.lweishi.service.FirstFaultService;
 import com.lweishi.service.SecondFaultService;
 import com.lweishi.utils.UnifyResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

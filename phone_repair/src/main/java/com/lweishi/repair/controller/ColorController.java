@@ -1,8 +1,7 @@
 package com.lweishi.repair.controller;
 
-import com.lweishi.domain.Color;
+import com.lweishi.model.Color;
 import com.lweishi.dto.ColorDTO;
-import com.lweishi.service.BrandService;
 import com.lweishi.service.ColorService;
 import com.lweishi.utils.UnifyResult;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

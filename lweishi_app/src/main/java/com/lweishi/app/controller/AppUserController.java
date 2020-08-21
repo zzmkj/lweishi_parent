@@ -1,8 +1,8 @@
 package com.lweishi.app.controller;
 
 import com.lweishi.app.dto.AppLoginDTO;
-import com.lweishi.app.service.AppUserService;
-import com.lweishi.app.vo.AppLoginVO;
+import com.lweishi.vo.AppLoginVO;
+import com.lweishi.service.AppUserService;
 import com.lweishi.utils.UnifyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

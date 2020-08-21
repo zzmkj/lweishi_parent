@@ -1,8 +1,9 @@
 package com.lweishi.repair.controller;
 
-import com.lweishi.model.Brand;
-import com.lweishi.dto.BrandDTO;
-import com.lweishi.service.BrandService;
+import com.lweishi.dto.BannerDTO;
+import com.lweishi.model.Banner;
+import com.lweishi.service.BannerService;
+import com.lweishi.service.BannerService;
 import com.lweishi.utils.UnifyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,18 +19,18 @@ import java.util.List;
 /**
  * @Author geek
  * @CreateTime 2020/8/7 23:21
- * @Description 品牌控制器
+ * @Description 轮播图控制器
  */
 @RestController
-@RequestMapping("/brand")
-public class BrandController {
+@RequestMapping("/banner")
+public class BannerController {
 
     @Autowired
-    private BrandService brandService;
+    private BannerService bannerService;
 
     @GetMapping("/all")
     public UnifyResult findAll() {
-        List<Brand> brandList = brandService.findAll();
+        List<Banner> brandList = bannerService.findAll();
         return UnifyResult.ok().data("brandList", brandList);
     }
 
@@ -37,32 +38,38 @@ public class BrandController {
     public UnifyResult findAll(@PageableDefault(page = 1, size = 10, direction = Sort.Direction.ASC, sort = "sequence") Pageable pageable,
                                @RequestParam(name = "keyword", required = false, defaultValue = "") String keyword) {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), pageable.getSort());
-        Page<Brand> pageData = brandService.findAll(pageRequest, keyword);
+        Page<Banner> pageData = bannerService.findAll(pageRequest, keyword);
         return UnifyResult.ok().data("pageData", pageData);
     }
 
     @DeleteMapping("/{id}")
     public UnifyResult deleteById(@PathVariable String id) {
-        brandService.deleteById(id);
+        bannerService.deleteById(id);
         return UnifyResult.ok();
     }
 
     @PostMapping("/save")
-    public UnifyResult save(@Validated @RequestBody  BrandDTO brandDTO) {
-        Brand brand = brandService.save(brandDTO);
-        return UnifyResult.ok().data("brand", brand);
+    public UnifyResult save(@Validated @RequestBody  BannerDTO bannerDTO) {
+        Banner banner = bannerService.save(bannerDTO);
+        return UnifyResult.ok().data("banner", banner);
     }
 
     @PutMapping("/update")
-    public UnifyResult update(@Validated @RequestBody BrandDTO brandDTO) {
-        Brand brand = brandService.update(brandDTO);
-        return UnifyResult.ok().data("brand", brand);
+    public UnifyResult update(@Validated @RequestBody BannerDTO bannerDTO) {
+        Banner banner = bannerService.update(bannerDTO);
+        return UnifyResult.ok().data("banner", banner);
     }
 
     @GetMapping("/{id}")
     public UnifyResult findById(@PathVariable String id) {
-        Brand brand = brandService.findById(id);
-        return UnifyResult.ok().data("brand", brand);
+        Banner banner = bannerService.findById(id);
+        return UnifyResult.ok().data("banner", banner);
+    }
+
+    @GetMapping("/change/{id}/status")
+    public UnifyResult changeStatus(@PathVariable String id, @RequestParam Boolean status) {
+        bannerService.changeStatus(id, status);
+        return UnifyResult.ok();
     }
 
 }

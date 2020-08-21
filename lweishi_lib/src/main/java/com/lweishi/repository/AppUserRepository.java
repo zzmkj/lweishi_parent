@@ -1,7 +1,7 @@
-package com.lweishi.app.repository;
+package com.lweishi.repository;
 
 
-import com.lweishi.app.domain.AppUser;
+import com.lweishi.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
