@@ -8,4 +8,7 @@ package com.lweishi.constant;
 public class Constant {
     public static Boolean BANNER_VALID = true; //轮播图状态启用
     public static Boolean BANNER_INVALID = false; //轮播图状态停用
+
+    public static Boolean PRODUCT_VALID = true; //手机产品状态启用
+    public static Boolean PRODUCT_INVALID = false; //手机产品状态停用
 }

@@ -3,7 +3,6 @@ package com.lweishi.service;
 import com.lweishi.dto.AppUserRegisterDTO;
 import com.lweishi.exception.GlobalException;
 import com.lweishi.model.AppUser;
-import com.lweishi.model.Color;
 import com.lweishi.repository.AppUserRepository;
 import com.lweishi.utils.BeanNullUtil;
 import com.lweishi.utils.IDUtil;
@@ -18,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +29,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
+@Transactional
 public class AppUserService {
 
     @Autowired
