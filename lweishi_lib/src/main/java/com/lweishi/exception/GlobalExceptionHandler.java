@@ -2,9 +2,13 @@ package com.lweishi.exception;
 
 import com.lweishi.utils.UnifyResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Slf4j
 @ControllerAdvice
@@ -31,5 +35,13 @@ public class GlobalExceptionHandler {
         log.error(ExceptionUtil.getMessage(e));
         e.printStackTrace();
         return UnifyResult.error().message(e.getMsg()).code(e.getCode());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public UnifyResult error(MethodArgumentNotValidException e) {
+        List<ObjectError> errorList = e.getBindingResult().getAllErrors();
+        log.error(errorList + "");
+        return UnifyResult.error().message(errorList.get(0).getDefaultMessage());
     }
 }

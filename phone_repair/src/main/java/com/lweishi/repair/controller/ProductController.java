@@ -4,6 +4,7 @@ import com.lweishi.dto.ProductDTO;
 import com.lweishi.model.Product;
 import com.lweishi.service.ProductService;
 import com.lweishi.utils.UnifyResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -20,6 +22,7 @@ import java.util.List;
  * @CreateTime 2020/8/7 23:21
  * @Description 产品控制器
  */
+@Slf4j
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -48,13 +51,14 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public UnifyResult save(@Validated @RequestBody  ProductDTO productDTO) {
+    public UnifyResult save(@Valid @RequestBody ProductDTO productDTO) {
+        log.info("【productDTO】 = {}", productDTO);
         Product product = productService.save(productDTO);
         return UnifyResult.ok().data("product", product);
     }
 
     @PutMapping("/update")
-    public UnifyResult update(@Validated @RequestBody ProductDTO productDTO) {
+    public UnifyResult update(@Valid @RequestBody ProductDTO productDTO) {
         Product product = productService.update(productDTO);
         return UnifyResult.ok().data("product", product);
     }
@@ -65,4 +69,9 @@ public class ProductController {
         return UnifyResult.ok().data("product", product);
     }
 
+    @GetMapping("/change/{id}/status")
+    public UnifyResult changeStatus(@PathVariable String id, @RequestParam Boolean status) {
+        productService.changeStatus(id, status);
+        return UnifyResult.ok();
+    }
 }

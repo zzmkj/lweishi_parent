@@ -81,6 +81,11 @@ public class ProductService {
             throw new GlobalException(ResultCode.ERROR, "更新产品信息失败");
         }
         Product product = findById(productDTO.getId());
+
+        if (!StringUtils.equals(productDTO.getBrandId(), product.getBrandId())) {
+            Brand brand = brandService.findById(productDTO.getBrandId());
+            product.setBrandName(brand.getName());
+        }
         BeanUtils.copyProperties(productDTO, product, BeanNullUtil.getNullPropertyNames(productDTO));
         return productRepository.save(product);
     }
