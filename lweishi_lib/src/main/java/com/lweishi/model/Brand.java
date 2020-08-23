@@ -40,11 +40,12 @@ public class Brand {
      */
     private String image;
 
+    private Boolean status;
+
     /**
      * @FiledName: 时间
      * @Description: 创立时间
      */
     private LocalDateTime createTime;
-
 
 }

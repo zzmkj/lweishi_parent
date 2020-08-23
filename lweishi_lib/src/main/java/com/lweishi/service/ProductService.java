@@ -95,4 +95,9 @@ public class ProductService {
         product.setStatus(status);
         productRepository.save(product);
     }
+
+    public List<Product> findAllValid() {
+        Sort sort = Sort.by(Sort.Direction.ASC, "sequence");
+        return productRepository.findByStatus(Constant.PRODUCT_VALID, sort);
+    }
 }

@@ -1,5 +1,6 @@
 package com.lweishi.service;
 
+import com.lweishi.constant.Constant;
 import com.lweishi.model.Brand;
 import com.lweishi.dto.BrandDTO;
 import com.lweishi.exception.GlobalException;
@@ -68,4 +69,8 @@ public class BrandService {
         return brandRepository.save(brand);
     }
 
+    public List<Brand> findAllValid() {
+        Sort sort = Sort.by(Sort.Direction.ASC, "sequence");
+        return brandRepository.findByStatus(Constant.BRAND_VALID, sort);
+    }
 }

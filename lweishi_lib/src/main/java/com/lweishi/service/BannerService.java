@@ -4,8 +4,6 @@ import com.lweishi.constant.Constant;
 import com.lweishi.dto.BannerDTO;
 import com.lweishi.exception.GlobalException;
 import com.lweishi.model.Banner;
-import com.lweishi.model.Banner;
-import com.lweishi.repository.BannerRepository;
 import com.lweishi.repository.BannerRepository;
 import com.lweishi.utils.BeanNullUtil;
 import com.lweishi.utils.IDUtil;
@@ -76,5 +74,10 @@ public class BannerService {
         Banner banner = findById(id);
         banner.setStatus(status);
         bannerRepository.save(banner);
+    }
+
+    public List<Banner> findAllValid() {
+        Sort sort = Sort.by(Sort.Direction.ASC, "sequence");
+        return bannerRepository.findByStatus(Constant.BANNER_VALID, sort);
     }
 }
