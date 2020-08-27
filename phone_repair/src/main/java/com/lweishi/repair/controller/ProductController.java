@@ -1,9 +1,12 @@
 package com.lweishi.repair.controller;
 
 import com.lweishi.dto.ProductDTO;
+import com.lweishi.dto.ProductFaultDTO;
 import com.lweishi.model.Product;
+import com.lweishi.service.ProductFaultService;
 import com.lweishi.service.ProductService;
 import com.lweishi.utils.UnifyResult;
+import com.lweishi.vo.ProductFaultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +32,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductFaultService productFaultService;
 
     @GetMapping("/all")
     public UnifyResult findAll() {
@@ -72,6 +78,18 @@ public class ProductController {
     @GetMapping("/change/{id}/status")
     public UnifyResult changeStatus(@PathVariable String id, @RequestParam Boolean status) {
         productService.changeStatus(id, status);
+        return UnifyResult.ok();
+    }
+
+    @GetMapping("/{id}/fault")
+    public UnifyResult findFaultInfo(@PathVariable String id) {
+        List<ProductFaultVO> faultInfo = productService.findFaultInfo(id);
+        return UnifyResult.ok().data("faultInfo", faultInfo);
+    }
+
+    @PostMapping("/add/fault")
+    public UnifyResult addProductFault(@Valid @RequestBody List<ProductFaultDTO> productFaultDTOList) {
+        productFaultService.saveAll(productFaultDTOList);
         return UnifyResult.ok();
     }
 }

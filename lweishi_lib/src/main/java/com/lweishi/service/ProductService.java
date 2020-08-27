@@ -1,14 +1,16 @@
 package com.lweishi.service;
 
+import com.google.common.collect.Lists;
 import com.lweishi.constant.Constant;
 import com.lweishi.dto.ProductDTO;
 import com.lweishi.exception.GlobalException;
-import com.lweishi.model.Brand;
-import com.lweishi.model.Product;
+import com.lweishi.model.*;
 import com.lweishi.repository.ProductRepository;
 import com.lweishi.utils.BeanNullUtil;
 import com.lweishi.utils.IDUtil;
 import com.lweishi.utils.ResultCode;
+import com.lweishi.vo.ProductFaultItemVO;
+import com.lweishi.vo.ProductFaultVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,10 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author geek
@@ -37,6 +42,15 @@ public class ProductService {
 
     @Autowired
     private BrandService brandService;
+
+    @Autowired
+    private ProductFaultService productFaultService;
+
+    @Autowired
+    private FirstFaultService firstFaultService;
+
+    @Autowired
+    private SecondFaultService secondFaultService;
 
     public List<Product> findAll() {
         Sort sort = Sort.by(Sort.Direction.ASC, "sequence");
@@ -99,5 +113,32 @@ public class ProductService {
     public List<Product> findAllValid() {
         Sort sort = Sort.by(Sort.Direction.ASC, "sequence");
         return productRepository.findByStatus(Constant.PRODUCT_VALID, sort);
+    }
+
+    /**
+     * 查询产品的故障信息
+     * @param id 产品id
+     * @return
+     */
+    public List<ProductFaultVO> findFaultInfo(String id) {
+        List<ProductFault> productFaults = productFaultService.findByProductId(id);
+        Map<String, List<ProductFaultItemVO>> faultsMap = productFaults.stream().map(productFault -> {
+            SecondFault secondFault = secondFaultService.findById(productFault.getSecondFaultId());
+            ProductFaultItemVO itemVO = new ProductFaultItemVO(secondFault.getFaultId(), secondFault.getId(), secondFault.getName(), secondFault.getPrice());
+            return itemVO;
+        }).collect(Collectors.toMap(ProductFaultItemVO::getFirstFaultId, Lists::newArrayList, (List<ProductFaultItemVO> newValueList, List<ProductFaultItemVO> oldValueList) -> {
+            oldValueList.addAll(newValueList);
+            return oldValueList;
+        }));
+        List<String> firstFaultIds = productFaults.stream().map(ProductFault::getFirstFaultId).distinct().collect(Collectors.toList());
+        List<FirstFault> firstFaults = firstFaultService.findByIds(firstFaultIds);
+        List<ProductFaultVO> result = firstFaults.stream().map(firstFault -> {
+            ProductFaultVO productFaultVO = new ProductFaultVO();
+            productFaultVO.setFirstFaultId(firstFault.getId());
+            productFaultVO.setFirstFaultName(firstFault.getName());
+            productFaultVO.setChildren(faultsMap.get(firstFault.getId()));
+            return productFaultVO;
+        }).collect(Collectors.toList());
+        return result;
     }
 }

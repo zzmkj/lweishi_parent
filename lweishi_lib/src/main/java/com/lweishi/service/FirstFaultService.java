@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -90,4 +91,8 @@ public class FirstFaultService {
         return firstFaults;
     }
 
+    public List<FirstFault> findByIds(List<String> ids) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "sequence");
+        return firstFaultRepository.findByIdIn(ids, sort);
+    }
 }
