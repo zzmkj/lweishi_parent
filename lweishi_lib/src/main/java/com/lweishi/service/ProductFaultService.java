@@ -74,4 +74,8 @@ public class ProductFaultService {
         productFault.setPrice(new BigDecimal(price));
         productFaultRepository.save(productFault);
     }
+
+    public List<ProductFault> findByIds(List<String> ids) {
+        return productFaultRepository.findByIdIn(ids);
+    }
 }

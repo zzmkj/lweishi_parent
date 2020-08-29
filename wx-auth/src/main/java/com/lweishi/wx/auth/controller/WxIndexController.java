@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @ClassName WxBannerController
- * @Description TODO
+ * @ClassName WxIndexController
+ * @Description 微信页面控制器
  * @Author zzm
  * @Data 2020/8/23 15:29
  * @Version 1.0

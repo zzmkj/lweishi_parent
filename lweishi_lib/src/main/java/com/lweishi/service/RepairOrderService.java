@@ -4,13 +4,13 @@ import com.lweishi.constant.Constant;
 import com.lweishi.dto.PersonalInfoDTO;
 import com.lweishi.dto.RepairOrderDTO;
 import com.lweishi.exception.GlobalException;
-import com.lweishi.model.AppUser;
-import com.lweishi.model.Product;
-import com.lweishi.model.RepairOrder;
+import com.lweishi.model.*;
 import com.lweishi.repository.RepairOrderRepository;
 import com.lweishi.utils.BeanNullUtil;
 import com.lweishi.utils.IDUtil;
 import com.lweishi.utils.ResultCode;
+import com.lweishi.vo.FaultVO;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,7 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName RepairOrderService
@@ -33,6 +34,7 @@ import java.util.List;
  * @Data 2020/8/24 15:58
  * @Version 1.0
  */
+@Slf4j
 @Service
 @Transactional
 public class RepairOrderService {
@@ -45,6 +47,12 @@ public class RepairOrderService {
 
     @Autowired
     private AppUserService appUserService;
+
+    @Autowired
+    private ProductFaultService productFaultService;
+
+    @Autowired
+    private SecondFaultService secondFaultService;
 
     public List<RepairOrder> findAll() {
         Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
@@ -85,11 +93,23 @@ public class RepairOrderService {
 
         repairOrder.setProductName(product.getName());
         repairOrder.setProductImage(product.getImage());
+        repairOrder.setBrandId(product.getBrandId());
+        repairOrder.setBrandName(product.getBrandName());
 
-        repairOrder.setPrice(new BigDecimal(0));
-        repairOrder.setActuallyPrice(new BigDecimal(0));
+        List<ProductFault> productFaults = productFaultService.findByIds(repairOrderDTO.getProductFaultIds());
+        final BigDecimal[] totalPrice = {new BigDecimal(0)};
 
-        repairOrder.setWxUserId("123");
+        List<FaultVO> faultVOList = productFaults.stream().map(fault -> {
+            SecondFault secondFault = secondFaultService.findById(fault.getSecondFaultId());
+            FaultVO faultVO = new FaultVO(fault.getId(), secondFault.getName(), fault.getPrice());
+            totalPrice[0] = totalPrice[0].add(fault.getPrice());
+            return faultVO;
+        }).collect(Collectors.toList());
+        log.info("【fault】 = {}", faultVOList);
+
+        repairOrder.setPrice(totalPrice[0]);
+        repairOrder.setActuallyPrice(totalPrice[0]);
+        repairOrder.setFaults(faultVOList);
 
         return repairOrderRepository.save(repairOrder);
     }

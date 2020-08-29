@@ -17,7 +17,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Data
 public class SecondFaultVO {
-    private String id;
+    private String id;  //产品故障ID
+
+    private String secondFaultId; //二级故障ID
 
     private String faultId; //一级故障id
 

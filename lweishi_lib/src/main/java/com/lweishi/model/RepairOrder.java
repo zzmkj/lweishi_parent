@@ -1,14 +1,19 @@
 package com.lweishi.model;
 
+import com.lweishi.vo.FaultVO;
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @ClassName Order
@@ -21,6 +26,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TypeDef(name = "json", typeClass = JsonStringType.class)
 public class RepairOrder {
     @Id
     @Column(name = "id", length = 32, nullable = false, unique = true)
@@ -59,5 +65,7 @@ public class RepairOrder {
     private String appUserName; //维修师傅名称
     private String appUserMobile; //维修师傅手机号
 
-    //TODO...二级产品故障列表集合
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private List<FaultVO> faults;
 }

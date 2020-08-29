@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * @ClassName RepairOrderDTO
@@ -36,10 +38,15 @@ public class RepairOrderDTO {
     @NotBlank(message = "产品颜色不能为空")
     private String color;
 
+    @NotEmpty(message = "维修故障不能为空")
+    private List<String> productFaultIds;
+
     @Range(min = 0, max = 1, message = "订单类型错误")
     private Integer type;
 
     private String time; //预约时间
 
     private String remark; //备注信息
+
+    private String wxUserId;
 }

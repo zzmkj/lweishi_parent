@@ -64,6 +64,8 @@ public class WxProductService {
             SecondFaultVO secondFaultVO = new SecondFaultVO();
             SecondFault secondFault = secondFaultService.findById(p.getSecondFaultId());
             BeanUtils.copyProperties(secondFault, secondFaultVO);
+            secondFaultVO.setId(p.getId());
+            secondFaultVO.setSecondFaultId(secondFault.getId());
             secondFaultVO.setPrice(p.getPrice());
             return secondFaultVO;
         }).collect(Collectors.toList());
