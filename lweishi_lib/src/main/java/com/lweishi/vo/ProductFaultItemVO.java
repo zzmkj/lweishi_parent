@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductFaultItemVO {
+    private String id;
     private String firstFaultId;
     private String secondFaultId;
     private String secondFaultName;

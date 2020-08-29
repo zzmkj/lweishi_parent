@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AppUser {
     @Id
+    @Column(name = "id", length = 32, unique = true, nullable = false)
     private String id;
 
     private String mobile;

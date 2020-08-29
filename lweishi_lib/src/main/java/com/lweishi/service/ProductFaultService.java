@@ -1,6 +1,5 @@
 package com.lweishi.service;
 
-import com.lweishi.constant.Constant;
 import com.lweishi.dto.ProductFaultDTO;
 import com.lweishi.exception.GlobalException;
 import com.lweishi.model.ProductFault;
@@ -11,8 +10,6 @@ import com.lweishi.utils.ResultCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -70,5 +67,11 @@ public class ProductFaultService {
 
     public List<ProductFault> findByProductId(String productId) {
         return productFaultRepository.findByProductId(productId);
+    }
+
+    public void updatePrice(String id, String price) {
+        ProductFault productFault = findById(id);
+        productFault.setPrice(new BigDecimal(price));
+        productFaultRepository.save(productFault);
     }
 }

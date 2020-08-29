@@ -31,8 +31,8 @@ public class ColorController {
 
     @GetMapping("/all")
     public UnifyResult findAll() {
-        List<Color> brandList = colorService.findAll();
-        return UnifyResult.ok().data("brandList", brandList);
+        List<Color> colorList = colorService.findAll();
+        return UnifyResult.ok().data("colorList", colorList);
     }
 
     @GetMapping("/page")

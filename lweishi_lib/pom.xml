@@ -28,6 +28,12 @@
             <artifactId>jjwt</artifactId>
             <version>0.7.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-52</artifactId>
+            <version>2.9.4</version>
+        </dependency>
     </dependencies>
 
 </project>

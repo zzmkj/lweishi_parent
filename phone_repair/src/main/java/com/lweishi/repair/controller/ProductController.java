@@ -14,11 +14,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author geek
@@ -83,13 +83,36 @@ public class ProductController {
 
     @GetMapping("/{id}/fault")
     public UnifyResult findFaultInfo(@PathVariable String id) {
-        List<ProductFaultVO> faultInfo = productService.findFaultInfo(id);
-        return UnifyResult.ok().data("faultInfo", faultInfo);
+        Map<String, Object> faultInfoMap = productService.findFaultInfo(id);
+        List<ProductFaultVO> faultInfo = (List<ProductFaultVO>) faultInfoMap.get("result");
+        List<String> secondFaultIds = (List<String>) faultInfoMap.get("secondFaultIds");
+        return UnifyResult.ok().data("faultInfo", faultInfo).data("secondFaultIds", secondFaultIds);
     }
 
     @PostMapping("/add/fault")
     public UnifyResult addProductFault(@Valid @RequestBody List<ProductFaultDTO> productFaultDTOList) {
         productFaultService.saveAll(productFaultDTOList);
+        return UnifyResult.ok();
+    }
+
+    /**
+     * 更新产品故障的价格
+     * @return
+     */
+    @GetMapping("/update/fault/price")
+    public UnifyResult updateProductFaultPrice(@RequestParam String productFaultId, @RequestParam String price) {
+        productFaultService.updatePrice(productFaultId, price);
+        return UnifyResult.ok();
+    }
+
+    /**
+     * 删除产品里的故障
+     * @param id 产品故障ID
+     * @return
+     */
+    @DeleteMapping("/fault/{id}")
+    public UnifyResult deleteProductFault(@PathVariable String id) {
+        productFaultService.deleteById(id);
         return UnifyResult.ok();
     }
 }

@@ -11,6 +11,7 @@ import com.lweishi.utils.IDUtil;
 import com.lweishi.utils.ResultCode;
 import com.lweishi.vo.ProductFaultItemVO;
 import com.lweishi.vo.ProductFaultVO;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,12 +34,16 @@ import java.util.stream.Collectors;
  * @CreateTime 2020/8/7 22:49
  * @Description 产品业务
  */
+@Slf4j
 @Service
 @Transactional
 public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ColorService colorService;
 
     @Autowired
     private BrandService brandService;
@@ -79,10 +84,12 @@ public class ProductService {
 
     public Product save(ProductDTO productDTO) {
         Product product = new Product();
+
+        BeanUtils.copyProperties(productDTO, product);
+        //查询品牌
         String brandId = productDTO.getBrandId();
         Brand brand = brandService.findById(brandId);
 
-        BeanUtils.copyProperties(productDTO, product);
         product.setId(IDUtil.UUID());
         product.setBrandName(brand.getName());
         product.setStatus(Constant.BANNER_VALID);
@@ -120,11 +127,13 @@ public class ProductService {
      * @param id 产品id
      * @return
      */
-    public List<ProductFaultVO> findFaultInfo(String id) {
+    public Map<String, Object> findFaultInfo(String id) {
         List<ProductFault> productFaults = productFaultService.findByProductId(id);
+        List<String> secondFaultIds = productFaults.stream().map(ProductFault::getSecondFaultId).collect(Collectors.toList());
+
         Map<String, List<ProductFaultItemVO>> faultsMap = productFaults.stream().map(productFault -> {
             SecondFault secondFault = secondFaultService.findById(productFault.getSecondFaultId());
-            ProductFaultItemVO itemVO = new ProductFaultItemVO(secondFault.getFaultId(), secondFault.getId(), secondFault.getName(), secondFault.getPrice());
+            ProductFaultItemVO itemVO = new ProductFaultItemVO(productFault.getId(), secondFault.getFaultId(), secondFault.getId(), secondFault.getName(), productFault.getPrice());
             return itemVO;
         }).collect(Collectors.toMap(ProductFaultItemVO::getFirstFaultId, Lists::newArrayList, (List<ProductFaultItemVO> newValueList, List<ProductFaultItemVO> oldValueList) -> {
             oldValueList.addAll(newValueList);
@@ -139,6 +148,9 @@ public class ProductService {
             productFaultVO.setChildren(faultsMap.get(firstFault.getId()));
             return productFaultVO;
         }).collect(Collectors.toList());
-        return result;
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+        resultMap.put("secondFaultIds", secondFaultIds);
+        return resultMap;
     }
 }

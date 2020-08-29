@@ -7,9 +7,12 @@ import com.lweishi.service.BannerService;
 import com.lweishi.service.BrandService;
 import com.lweishi.service.ProductService;
 import com.lweishi.utils.UnifyResult;
+import com.lweishi.wx.auth.service.WxProductService;
 import com.lweishi.wx.auth.vo.CategoryVO;
+import com.lweishi.wx.auth.vo.ProductInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +38,9 @@ public class WxIndexController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private WxProductService wxProductService;
+
     @GetMapping("/banner")
     public UnifyResult findBanner() {
         List<Banner> bannerList = bannerService.findAllValid();
@@ -47,5 +53,11 @@ public class WxIndexController {
         List<Product> products = productService.findAllValid();
         CategoryVO categories = new CategoryVO(brands, products);
         return UnifyResult.ok().data("categories", categories);
+    }
+
+    @GetMapping("/product/{id}/info")
+    public UnifyResult findProductInfo(@PathVariable String id) {
+        ProductInfoVO productInfo = wxProductService.findProductInfo(id);
+        return UnifyResult.ok().data("info", productInfo);
     }
 }

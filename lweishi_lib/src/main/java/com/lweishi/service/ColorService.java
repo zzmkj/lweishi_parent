@@ -68,4 +68,8 @@ public class ColorService {
         return colorRepository.save(color);
     }
 
+    public List<Color> findByIdIn(List<String> ids) {
+        return colorRepository.findByIdIn(ids);
+    }
+
 }

@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @Author geek
@@ -24,6 +26,9 @@ public class ProductDTO {
 
     @NotBlank(message = "名称不能为空")
     private String name;
+
+    @NotNull(message = "颜色不能为空")
+    private List<String> colorIds;
 
     @NotBlank(message = "图片不能为空")
     private String image;
