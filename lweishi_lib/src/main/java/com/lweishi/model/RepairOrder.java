@@ -46,7 +46,8 @@ public class RepairOrder {
     private String mobile; //手机号
     private String address; // 地址
 
-    private String time; //预约时间
+    private String time; //用户预约时间【期望时间】
+    private String reserveTime; //最终预约时间【维修师傅联系用户进行协商确认】
 
     private BigDecimal price; //订单价格
     private BigDecimal actuallyPrice; //订单实付价格

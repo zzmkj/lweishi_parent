@@ -8,13 +8,11 @@ import com.lweishi.wx.auth.domain.WxUser;
 import com.lweishi.wx.auth.utils.WxUserResolve;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @ClassName WxOrderController
@@ -42,4 +40,23 @@ public class WxRepairOrderController {
         return UnifyResult.ok().data("order", order);
     }
 
+    @GetMapping("/all")
+    public UnifyResult findAll(HttpServletRequest request) {
+        WxUser wxUser = wxUserResolve.resolveWxUser(request);
+        List<RepairOrder> orderList = repairOrderService.findByWxUserId(wxUser.getId());
+        return UnifyResult.ok().data("orderList", orderList);
+    }
+
+    @GetMapping("/{id}")
+    public UnifyResult findById(@PathVariable String id) {
+        RepairOrder order = repairOrderService.findById(id);
+        return UnifyResult.ok().data("order", order);
+    }
+
+    @DeleteMapping("/{id}")
+    public UnifyResult deleteById(@PathVariable String id, HttpServletRequest request) {
+        WxUser wxUser = wxUserResolve.resolveWxUser(request);
+        repairOrderService.deleteById(id);
+        return UnifyResult.ok();
+    }
 }

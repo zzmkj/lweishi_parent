@@ -84,7 +84,7 @@ public class RepairOrderService {
 
         BeanUtils.copyProperties(repairOrderDTO, repairOrder);
 
-        repairOrder.setId(IDUtil.UUID());
+        repairOrder.setId(IDUtil.UUID().substring(0, 19));
         repairOrder.setStatus(Constant.REPAIR_ORDER_STATUS_WAITING);
         repairOrder.setCreateTime(LocalDateTime.now());
 
@@ -142,5 +142,9 @@ public class RepairOrderService {
         }
         order.setStatus(status);
         repairOrderRepository.save(order);
+    }
+
+    public List<RepairOrder> findByWxUserId(String wxUserId) {
+        return repairOrderRepository.findByWxUserId(wxUserId);
     }
 }
