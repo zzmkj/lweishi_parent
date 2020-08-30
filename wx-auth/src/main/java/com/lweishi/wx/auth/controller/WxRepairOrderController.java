@@ -1,5 +1,6 @@
 package com.lweishi.wx.auth.controller;
 
+import com.lweishi.constant.Constant;
 import com.lweishi.dto.RepairOrderDTO;
 import com.lweishi.model.RepairOrder;
 import com.lweishi.service.RepairOrderService;
@@ -53,10 +54,10 @@ public class WxRepairOrderController {
         return UnifyResult.ok().data("order", order);
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/{id}/cancel")
     public UnifyResult deleteById(@PathVariable String id, HttpServletRequest request) {
         WxUser wxUser = wxUserResolve.resolveWxUser(request);
-        repairOrderService.deleteById(id);
+        repairOrderService.updateStatus(id, Constant.REPAIR_ORDER_STATUS_CANCELLED);
         return UnifyResult.ok();
     }
 }
