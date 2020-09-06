@@ -44,7 +44,7 @@ public class WxIndexController {
     @GetMapping("/banner")
     public UnifyResult findBanner() {
         List<Banner> bannerList = bannerService.findAllValid();
-        return UnifyResult.error().data("bannerList", bannerList);
+        return UnifyResult.ok().data("bannerList", bannerList);
     }
 
     @GetMapping("/category")

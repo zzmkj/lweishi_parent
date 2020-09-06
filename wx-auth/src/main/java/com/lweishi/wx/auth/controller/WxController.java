@@ -67,6 +67,7 @@ public class WxController {
     //根据token获取用户信息
     @GetMapping("/userInfo")
     public UnifyResult getMemberInfo(HttpServletRequest request) {
+        log.info("【userInfo】 = {}", request.getAttribute("wxUserId"));
         //调用jwt工具类的方法。根据request对象获取头信息，返回用户id
         String memberId = JwtUtils.getMemberIdByJwtToken(request);
         //查询数据库根据用户id获取用户信息

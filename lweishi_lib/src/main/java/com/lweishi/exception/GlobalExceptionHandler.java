@@ -1,12 +1,15 @@
 package com.lweishi.exception;
 
 import com.lweishi.utils.UnifyResult;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -43,5 +46,21 @@ public class GlobalExceptionHandler {
         List<ObjectError> errorList = e.getBindingResult().getAllErrors();
         log.error(errorList + "");
         return UnifyResult.error().message(errorList.get(0).getDefaultMessage());
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public UnifyResult error(UnauthorizedException e){
+        log.error(ExceptionUtil.getMessage(e));
+        return UnifyResult.error().code(10005).message(e.getMsg());
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public UnifyResult error(ExpiredJwtException e){
+        log.error(ExceptionUtil.getMessage(e));
+        return UnifyResult.error().code(10005).message("无效token");
     }
 }
