@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @ClassName UserController
- * @Description TODO
+ * @Description app 登录控制器
  * @Author zzm
  * @Data 2020/8/14 14:48
  * @Version 1.0

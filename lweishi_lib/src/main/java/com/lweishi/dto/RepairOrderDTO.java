@@ -32,6 +32,9 @@ public class RepairOrderDTO {
     @NotBlank(message = "地址不能为空")
     private String address; // 地址
 
+    @NotBlank(message = "经纬度不能为空")
+    private String lnglat; // 经纬度
+
     @NotBlank(message = "产品ID不能为空")
     private String productId;
 

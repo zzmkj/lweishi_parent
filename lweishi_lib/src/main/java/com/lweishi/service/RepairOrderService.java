@@ -14,9 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -146,5 +144,40 @@ public class RepairOrderService {
 
     public List<RepairOrder> findByWxUserId(String wxUserId) {
         return repairOrderRepository.findByWxUserId(wxUserId);
+    }
+
+    public Page<RepairOrder> findByStatusAndApp(Integer status, Pageable pageable, AppUser appUser) {
+        Page<RepairOrder> page = null;
+        switch (status) {
+            case 0: //待接单
+                page = repairOrderRepository.findByStatus(status, pageable);
+                break;
+            case 1: //进行中
+            case 2: //已完成
+                page = repairOrderRepository.findByStatusAndAppUserId(status, appUser.getId(), pageable);
+                break;
+            default:
+                throw new GlobalException(10007, "请求失败！");
+        }
+        return page;
+    }
+
+    public RepairOrder findByIdAndAppUserId(String id, String appUserId) {
+        return repairOrderRepository.findByIdAndAppUserId(id, appUserId).orElseThrow(() -> new GlobalException(10006, "未找到该订单信息"));
+    }
+
+    public void grabRepairOrder(String id, AppUser appUser) {
+        RepairOrder order = findById(id);
+        log.info("【用户】 = {}", appUser.getId());
+        log.info("【用户】 = {}", appUser.getMobile());
+        if (!Constant.REPAIR_ORDER_STATUS_WAITING.equals(order.getStatus()) || StringUtils.isNotBlank(order.getAppUserId())) {
+            throw new GlobalException(10008, "该订单已接单！");
+        }
+        order.setAppUserId(appUser.getId());
+        order.setAppUserName(appUser.getName());
+        order.setAppUserMobile(appUser.getMobile());
+        order.setStatus(Constant.REPAIR_ORDER_STATUS_PROCESSING);
+        order.setReceiveTime(LocalDateTime.now());
+        repairOrderRepository.save(order);
     }
 }

@@ -45,6 +45,7 @@ public class RepairOrder {
     private String customer; //客户名称
     private String mobile; //手机号
     private String address; // 地址
+    private String lnglat; // 经纬度
 
     private String time; //用户预约时间【期望时间】
     private String reserveTime; //最终预约时间【维修师傅联系用户进行协商确认】
