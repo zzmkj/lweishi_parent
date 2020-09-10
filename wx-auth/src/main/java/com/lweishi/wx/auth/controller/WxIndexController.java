@@ -2,11 +2,14 @@ package com.lweishi.wx.auth.controller;
 
 import com.lweishi.model.Banner;
 import com.lweishi.model.Brand;
+import com.lweishi.model.Issue;
 import com.lweishi.model.Product;
 import com.lweishi.service.BannerService;
 import com.lweishi.service.BrandService;
+import com.lweishi.service.IssueService;
 import com.lweishi.service.ProductService;
 import com.lweishi.utils.UnifyResult;
+import com.lweishi.vo.IssueVO;
 import com.lweishi.wx.auth.service.WxProductService;
 import com.lweishi.wx.auth.vo.CategoryVO;
 import com.lweishi.wx.auth.vo.ProductInfoVO;
@@ -41,6 +44,9 @@ public class WxIndexController {
     @Autowired
     private WxProductService wxProductService;
 
+    @Autowired
+    private IssueService issueService;
+
     @GetMapping("/banner")
     public UnifyResult findBanner() {
         List<Banner> bannerList = bannerService.findAllValid();
@@ -59,5 +65,17 @@ public class WxIndexController {
     public UnifyResult findProductInfo(@PathVariable String id) {
         ProductInfoVO productInfo = wxProductService.findProductInfo(id);
         return UnifyResult.ok().data("info", productInfo);
+    }
+
+    @GetMapping("/issue")
+    public UnifyResult findIssue() {
+        IssueVO result = issueService.findTree();
+        return UnifyResult.ok().data("result", result);
+    }
+
+    @GetMapping("/issue/{id}")
+    public UnifyResult findIssueDetail(@PathVariable String id) {
+        Issue issue = issueService.findById(id);
+        return UnifyResult.ok().data("result", issue);
     }
 }
