@@ -57,12 +57,18 @@ public class RepairOrderService {
         return repairOrderRepository.findAll(sort);
     }
 
-    public Page<RepairOrder> findAll(Pageable pageable, String keyword) {
+    public Page<RepairOrder> findAll(Pageable pageable, String keyword, Integer status) {
         Specification<RepairOrder> specification =  (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if (StringUtils.isNotBlank(keyword)) {
                 String key = "%" + keyword + "%";
-                predicate = cb.or(cb.like(root.get("name"), key), cb.like(root.get("brandName"), key));
+                predicate = cb.or(cb.like(root.get("id"), key), cb.like(root.get("brandName"), key),
+                        cb.like(root.get("customer"), key), cb.like(root.get("mobile"), key), cb.like(root.get("productName"), key),
+                        cb.like(root.get("address"), key));
+            }
+//            log.info("【状态】 = {}", status);
+            if (status != null) {
+                predicate = cb.and(predicate, cb.equal(root.get("status"), status));
             }
             return predicate;
         };
