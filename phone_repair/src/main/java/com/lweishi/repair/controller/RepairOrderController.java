@@ -1,5 +1,6 @@
 package com.lweishi.repair.controller;
 
+import com.lweishi.constant.Constant;
 import com.lweishi.model.RepairOrder;
 import com.lweishi.service.RepairOrderService;
 import com.lweishi.utils.UnifyResult;
@@ -53,6 +54,12 @@ public class RepairOrderController {
     public UnifyResult findById(@PathVariable String id) {
         RepairOrder repairOrder = repairOrderService.findById(id);
         return UnifyResult.ok().data("order", repairOrder);
+    }
+
+    @GetMapping("/{id}/cancel")
+    public UnifyResult cancelOrder(@PathVariable String id) {
+        repairOrderService.updateStatus(id, Constant.REPAIR_ORDER_STATUS_CANCELLED);
+        return UnifyResult.ok();
     }
 
 }
