@@ -1,11 +1,9 @@
 package com.lweishi.wx.auth.config;
 
-import com.lweishi.exception.GlobalException;
 import com.lweishi.exception.UnauthorizedException;
-import com.lweishi.wx.auth.utils.JwtUtils;
+import com.lweishi.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.auth.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 

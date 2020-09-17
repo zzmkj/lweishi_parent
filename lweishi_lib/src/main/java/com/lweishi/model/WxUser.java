@@ -1,4 +1,4 @@
-package com.lweishi.wx.auth.domain;
+package com.lweishi.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

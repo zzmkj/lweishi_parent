@@ -5,7 +5,7 @@ import com.lweishi.dto.RepairOrderDTO;
 import com.lweishi.model.RepairOrder;
 import com.lweishi.service.RepairOrderService;
 import com.lweishi.utils.UnifyResult;
-import com.lweishi.wx.auth.domain.WxUser;
+import com.lweishi.model.WxUser;
 import com.lweishi.wx.auth.utils.WxUserResolve;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

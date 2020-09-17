@@ -2,14 +2,15 @@ package com.lweishi.wx.auth.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.lweishi.model.WxUser;
+import com.lweishi.service.WxUserService;
+import com.lweishi.utils.JwtUtils;
 import com.lweishi.utils.UnifyResult;
-import com.lweishi.wx.auth.constant.WxConstant;
-import com.lweishi.wx.auth.domain.WxUser;
-import com.lweishi.wx.auth.service.WxUserService;
+import com.lweishi.vo.WxLoginVO;
+import com.lweishi.wx.WxConstant;
 import com.lweishi.wx.auth.utils.HttpClientUtils;
-import com.lweishi.wx.auth.utils.JwtUtils;
+import com.lweishi.wx.auth.utils.WxUserResolve;
 import com.lweishi.wx.auth.utils.WxUtils;
-import com.lweishi.wx.auth.vo.WxLoginVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class WxController {
 
     @Autowired
     private WxUserService wxUserService;
+
+    @Autowired
+    private WxUserResolve wxUserResolve;
 
     @GetMapping("/auth/phone")
     public UnifyResult authPhone(String code, String encryptedData, String iv) throws Exception {
@@ -67,11 +71,8 @@ public class WxController {
     //根据token获取用户信息
     @GetMapping("/userInfo")
     public UnifyResult getMemberInfo(HttpServletRequest request) {
-        log.info("【userInfo】 = {}", request.getAttribute("wxUserId"));
-        //调用jwt工具类的方法。根据request对象获取头信息，返回用户id
-        String memberId = JwtUtils.getMemberIdByJwtToken(request);
-        //查询数据库根据用户id获取用户信息
-        WxUser wxUser = wxUserService.findById(memberId);
+
+        WxUser wxUser = wxUserResolve.resolveWxUser(request);
         return UnifyResult.ok().data("userInfo", wxUser);
     }
 

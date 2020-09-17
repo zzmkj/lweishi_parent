@@ -1,7 +1,7 @@
-package com.lweishi.wx.auth.repository;
+package com.lweishi.repository;
 
 
-import com.lweishi.wx.auth.domain.WxUser;
+import com.lweishi.model.WxUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

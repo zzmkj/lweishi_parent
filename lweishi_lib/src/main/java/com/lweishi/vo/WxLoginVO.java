@@ -1,4 +1,4 @@
-package com.lweishi.wx.auth.vo;
+package com.lweishi.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

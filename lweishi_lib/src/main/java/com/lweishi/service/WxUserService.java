@@ -1,10 +1,10 @@
-package com.lweishi.wx.auth.service;
+package com.lweishi.service;
 
+import com.lweishi.model.WxUser;
+import com.lweishi.repository.WxUserRepository;
 import com.lweishi.utils.IDUtil;
-import com.lweishi.wx.auth.domain.WxUser;
-import com.lweishi.wx.auth.repository.WxUserRepository;
-import com.lweishi.wx.auth.utils.JwtUtils;
-import com.lweishi.wx.auth.vo.WxLoginVO;
+import com.lweishi.utils.JwtUtils;
+import com.lweishi.vo.WxLoginVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

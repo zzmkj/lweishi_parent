@@ -31,6 +31,12 @@ public class AppOrderController {
     @Autowired
     private RepairOrderService repairOrderService;
 
+    /**
+     * 根据状态查询订单
+     * @param pageable 分页对象
+     * @param status 订单状态
+     * @return
+     */
     @GetMapping("/repair/all/{status}")
     public UnifyResult findByStatus(@PageableDefault(page = 1, size = 10, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
                                     @PathVariable Integer status, HttpServletRequest request) {
@@ -41,12 +47,23 @@ public class AppOrderController {
         return UnifyResult.ok().data("page", orderPage);
     }
 
+    /**
+     * 查询订单详情
+     * @param id 订单id
+     * @return
+     */
     @GetMapping("/repair/{id}")
     public UnifyResult findByStatus(@PathVariable String id) {
         RepairOrder order = repairOrderService.findById(id);
         return UnifyResult.ok().data("order", order);
     }
 
+    /**
+     * 工程师接单
+     * @param id 订单ID
+     * @param request
+     * @return
+     */
     @PostMapping("/repair/{id}/grab")
     public UnifyResult grabRepairOrder(@PathVariable String id, HttpServletRequest request) {
         AppUser appUser = (AppUser) request.getAttribute("appUser");
@@ -54,6 +71,11 @@ public class AppOrderController {
         return UnifyResult.ok();
     }
 
+    /**
+     * 完成订单
+     * @param id
+     * @return
+     */
     @GetMapping("/repair/{id}/complete")
     public UnifyResult completeOrder(@PathVariable String id) {
         repairOrderService.updateStatus(id, Constant.REPAIR_ORDER_STATUS_COMPLETED);

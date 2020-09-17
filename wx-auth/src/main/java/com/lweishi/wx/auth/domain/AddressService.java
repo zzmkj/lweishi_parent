@@ -4,6 +4,7 @@ import com.lweishi.constant.Constant;
 import com.lweishi.dto.AddressDTO;
 import com.lweishi.exception.GlobalException;
 import com.lweishi.model.Address;
+import com.lweishi.model.WxUser;
 import com.lweishi.utils.BeanNullUtil;
 import com.lweishi.utils.IDUtil;
 import com.lweishi.utils.ResultCode;

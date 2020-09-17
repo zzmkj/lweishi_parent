@@ -18,6 +18,24 @@ public class JwtUtils {
     public static final long EXPIRE = 1000 * 60 * 60 * 24;
     public static final String APP_SECRET = "ukc8BDbRigUDaY6pZFfWus2jZWLPHO";
 
+
+    public static String getJwtToken(String id, String nickname, String avatar){
+
+        String JwtToken = Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setHeaderParam("alg", "HS256")
+                .setSubject("guli-user")
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
+                .claim("id", id)
+                .claim("nickname", nickname)
+                .claim("avatar", avatar)
+                .signWith(SignatureAlgorithm.HS256, APP_SECRET)
+                .compact();
+
+        return JwtToken;
+    }
+
     public static String getAppJwtToken(String id, String nickname, String avatar){
 
         String JwtToken = Jwts.builder()

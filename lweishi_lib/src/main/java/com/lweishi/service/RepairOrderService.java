@@ -10,6 +10,7 @@ import com.lweishi.utils.BeanNullUtil;
 import com.lweishi.utils.IDUtil;
 import com.lweishi.utils.ResultCode;
 import com.lweishi.vo.FaultVO;
+import com.lweishi.wx.WxTemplateService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -51,6 +52,9 @@ public class RepairOrderService {
 
     @Autowired
     private SecondFaultService secondFaultService;
+
+    @Autowired
+    private WxTemplateService wxTemplateService;
 
     public List<RepairOrder> findAll() {
         Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
@@ -185,5 +189,8 @@ public class RepairOrderService {
         order.setStatus(Constant.REPAIR_ORDER_STATUS_PROCESSING);
         order.setReceiveTime(LocalDateTime.now());
         repairOrderRepository.save(order);
+
+        //发送微信消息提醒用户，已接单
+        wxTemplateService.sendReceiptOrderMsg(order);
     }
 }

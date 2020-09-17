@@ -1,6 +1,6 @@
 package com.lweishi.wx.auth.utils;
 
-import com.lweishi.wx.auth.constant.WxConstant;
+import com.lweishi.wx.WxConstant;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
