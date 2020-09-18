@@ -7,6 +7,7 @@ import com.lweishi.utils.JwtUtils;
 import com.lweishi.vo.WxLoginVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,9 @@ public class WxUserService {
     @Autowired
     private WxUserRepository wxUserRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public Optional<WxUser> checkUserIsExist(String openid) {
         return wxUserRepository.findByOpenid(openid);
     }
@@ -36,7 +40,7 @@ public class WxUserService {
     }
 
     public WxUser register(String openid, String name, String mobile, String avatar) {
-        WxUser wxUser = new WxUser(IDUtil.UUID(), mobile, "liweishi", name, avatar, openid, LocalDateTime.now());
+        WxUser wxUser = new WxUser(IDUtil.UUID(), mobile, passwordEncoder.encode("liweishi"), name, avatar, openid, LocalDateTime.now());
         return wxUserRepository.save(wxUser);
     }
 

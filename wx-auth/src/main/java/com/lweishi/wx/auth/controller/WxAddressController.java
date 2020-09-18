@@ -19,7 +19,7 @@ import java.util.List;
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/wx/address")
+@RequestMapping("/address")
 public class WxAddressController {
 
     @Autowired

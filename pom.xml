@@ -52,6 +52,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- 单元测试:Junit依赖 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- apache 工具类 -->
         <dependency>
             <groupId>commons-codec</groupId>

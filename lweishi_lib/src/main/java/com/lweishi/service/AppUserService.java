@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -35,6 +36,9 @@ public class AppUserService {
     @Autowired
     private AppUserRepository appUserRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public Optional<AppUser> checkUserIsExist(String mobile) {
         return appUserRepository.findByMobile(mobile);
     }
@@ -43,7 +47,7 @@ public class AppUserService {
         log.info("【mobile = {}password = {} 】", mobile, password);
         Optional<AppUser> userOptional = this.checkUserIsExist(mobile.trim());
         AppUser appUser = userOptional.orElseThrow(() -> new GlobalException(30001, "用户名或者密码错误"));
-        if (!StringUtils.equals(password, appUser.getPassword())) {
+        if (!passwordEncoder.matches(password, appUser.getPassword())) {
             throw new GlobalException(30001, "用户名或者密码错误");
         }
         String token = JwtUtils.getAppJwtToken(appUser.getId(), appUser.getName(), appUser.getAvatar());
@@ -57,7 +61,8 @@ public class AppUserService {
             //如果存在，抛出异常信息
             throw new GlobalException(ResultCode.ERROR, "该手机号已经注册！");
         }
-        AppUser appUser = new AppUser(IDUtil.UUID(), appUserRegisterDTO.getMobile(), appUserRegisterDTO.getPassword(), appUserRegisterDTO.getName(), appUserRegisterDTO.getAvatar(), LocalDateTime.now());
+        String encodePassword = passwordEncoder.encode(appUserRegisterDTO.getPassword());
+        AppUser appUser = new AppUser(IDUtil.UUID(), appUserRegisterDTO.getMobile(), encodePassword, appUserRegisterDTO.getName(), appUserRegisterDTO.getAvatar(), LocalDateTime.now());
         return appUserRepository.save(appUser);
     }
 

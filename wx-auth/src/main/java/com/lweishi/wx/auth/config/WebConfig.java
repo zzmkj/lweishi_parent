@@ -11,6 +11,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Resource
     private TokenInterceptor tokenInterceptor;
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(tokenInterceptor).addPathPatterns("/wx/order/**", "/wx/address/**", "/wx/userInfo");
+        registry.addInterceptor(tokenInterceptor).addPathPatterns("/order/**", "/address/**", "/userInfo");
     }
 }

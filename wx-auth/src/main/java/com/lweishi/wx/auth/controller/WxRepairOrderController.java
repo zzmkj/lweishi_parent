@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/wx/order/repair")
+@RequestMapping("/order/repair")
 public class WxRepairOrderController {
 
     @Autowired
