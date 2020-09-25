@@ -73,7 +73,7 @@ public class AppOrderController {
 
     /**
      * 完成订单
-     * @param id
+     * @param id 订单ID
      * @return
      */
     @GetMapping("/repair/{id}/complete")
@@ -82,4 +82,14 @@ public class AppOrderController {
         return UnifyResult.ok();
     }
 
+    /**
+     * 取消订单
+     * @param id 订单ID
+     * @return
+     */
+    @GetMapping("/repair/{id}/cancel")
+    public UnifyResult cancelOrder(@PathVariable String id) {
+        repairOrderService.updateStatus(id, Constant.REPAIR_ORDER_STATUS_CANCELLED);
+        return UnifyResult.ok();
+    }
 }
