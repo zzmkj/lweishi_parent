@@ -67,6 +67,9 @@ public class RepairOrder {
     private String appUserName; //维修师傅名称
     private String appUserMobile; //维修师傅手机号
 
+    private String imageBefore; //维修前图片
+    private String imageAfter; //维修后图片
+
     @Type(type = "json")
     @Column(columnDefinition = "json")
     private List<FaultVO> faults;

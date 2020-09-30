@@ -46,6 +46,13 @@
             <artifactId>lweishi_lib</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <!--极光推送-->
+        <dependency>
+            <groupId>cn.jpush.api</groupId>
+            <artifactId>jpush-client</artifactId>
+            <version>3.2.9</version>
+        </dependency>
     </dependencies>
 
 </project>

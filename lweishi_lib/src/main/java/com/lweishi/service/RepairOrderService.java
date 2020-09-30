@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
@@ -55,6 +56,9 @@ public class RepairOrderService {
 
     @Autowired
     private WxTemplateService wxTemplateService;
+
+    @Autowired
+    private UploadService uploadService;
 
     public List<RepairOrder> findAll() {
         Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
@@ -192,5 +196,41 @@ public class RepairOrderService {
 
         //发送微信消息提醒用户，已接单
         wxTemplateService.sendReceiptOrderMsg(order);
+    }
+
+    public String uploadImage(String id, Integer type, MultipartFile file) {
+        RepairOrder order = findById(id);
+        if (order.getStatus().equals(Constant.REPAIR_ORDER_STATUS_WAITING)) {
+            throw new GlobalException(30004, "上传图片失败！");
+        }
+        String imageUrl = uploadService.uploadImage(file);
+        if (type == 0) { //type为0的时候是 维修前图片
+            order.setImageBefore(imageUrl);
+        } else if (type == 1) { //type为1的时候是 维修后图片
+            order.setImageAfter(imageUrl);
+        } else {
+            throw new GlobalException(30004, "上传图片失败！");
+        }
+        log.info("【上传成功！】");
+        RepairOrder result = repairOrderRepository.save(order);
+        return type == 0 ? result.getImageBefore() : result.getImageAfter();
+    }
+
+    public void deleteImage(String id, Integer type) {
+        RepairOrder order = findById(id);
+        if (order.getStatus().equals(Constant.REPAIR_ORDER_STATUS_WAITING)) {
+            throw new GlobalException(30005, "删除图片失败！");
+        }
+        if (type == 0) { //type为0的时候是 维修前图片
+            uploadService.deleteImage(StringUtils.substringAfterLast(order.getImageBefore(), "/"));
+            order.setImageBefore(null);
+        } else if (type == 1) { //type为1的时候是 维修后图片
+            uploadService.deleteImage(StringUtils.substringAfterLast(order.getImageAfter(), "/"));
+            order.setImageAfter(null);
+        } else {
+            throw new GlobalException(30005, "删除图片失败！");
+        }
+        log.info("【删除图片成功！】");
+        repairOrderRepository.save(order);
     }
 }

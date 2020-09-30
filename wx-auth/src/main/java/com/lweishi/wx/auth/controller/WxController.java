@@ -7,6 +7,7 @@ import com.lweishi.service.WxUserService;
 import com.lweishi.utils.UnifyResult;
 import com.lweishi.vo.WxLoginVO;
 import com.lweishi.wx.WxConstant;
+import com.lweishi.wx.auth.message.JiGuangPushService;
 import com.lweishi.wx.auth.utils.HttpClientUtils;
 import com.lweishi.wx.auth.utils.WxUserResolve;
 import com.lweishi.wx.auth.utils.WxUtils;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +41,9 @@ public class WxController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JiGuangPushService jiGuangPushService;
 
     @GetMapping("/auth/phone")
     public UnifyResult authPhone(String code, String encryptedData, String iv) throws Exception {
@@ -78,8 +83,9 @@ public class WxController {
     }
 
     @GetMapping("/test")
-    public void test() {
-        String encode = passwordEncoder.encode("123456");
+    public Boolean test(@RequestParam String title) {
+        String encode = passwordEncoder.encode("ssti15913");
         System.out.println(encode);
+        return true;
     }
 }

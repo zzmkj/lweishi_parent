@@ -1,4 +1,4 @@
-package com.lweishi.repair.controller;
+package com.lweishi.app.controller;
 
 import com.lweishi.service.UploadService;
 import com.lweishi.utils.UnifyResult;

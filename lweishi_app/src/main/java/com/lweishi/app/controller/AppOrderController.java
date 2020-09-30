@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,6 +91,18 @@ public class AppOrderController {
     @GetMapping("/repair/{id}/cancel")
     public UnifyResult cancelOrder(@PathVariable String id) {
         repairOrderService.updateStatus(id, Constant.REPAIR_ORDER_STATUS_CANCELLED);
+        return UnifyResult.ok();
+    }
+
+    @PostMapping("/repair/{id}/upload/image")
+    public UnifyResult orderUploadImage(@PathVariable String id, @RequestParam Integer type, MultipartFile file) {
+        String imgUrl = repairOrderService.uploadImage(id, type, file);
+        return UnifyResult.ok().data("imgUrl", imgUrl);
+    }
+
+    @PostMapping("/repair/{id}/delete/image")
+    public UnifyResult orderDeleteImage(@PathVariable String id, @RequestParam Integer type) {
+        repairOrderService.deleteImage(id, type);
         return UnifyResult.ok();
     }
 }

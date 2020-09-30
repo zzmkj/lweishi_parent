@@ -3,9 +3,11 @@ package com.lweishi.wx.auth.controller;
 import com.lweishi.constant.Constant;
 import com.lweishi.dto.RepairOrderDTO;
 import com.lweishi.model.RepairOrder;
+import com.lweishi.model.WxUser;
 import com.lweishi.service.RepairOrderService;
 import com.lweishi.utils.UnifyResult;
-import com.lweishi.model.WxUser;
+import com.lweishi.wx.auth.message.JiGuangPushService;
+import com.lweishi.wx.auth.message.PushBean;
 import com.lweishi.wx.auth.utils.WxUserResolve;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +35,15 @@ public class WxRepairOrderController {
     @Autowired
     private WxUserResolve wxUserResolve;
 
+    @Autowired
+    private JiGuangPushService jiGuangPushService;
+
     @PostMapping("/add")
     public UnifyResult save(@Valid @RequestBody RepairOrderDTO repairOrderDTO, HttpServletRequest request) {
         WxUser wxUser = wxUserResolve.resolveWxUser(request);
         repairOrderDTO.setWxUserId(wxUser.getId());
         RepairOrder order = repairOrderService.save(repairOrderDTO);
+        sendAppMessage("您有新订单来了！", "产品型号：" +order.getBrandName() + order.getProductName());
         return UnifyResult.ok().data("order", order);
     }
 
@@ -59,5 +65,12 @@ public class WxRepairOrderController {
         WxUser wxUser = wxUserResolve.resolveWxUser(request);
         repairOrderService.updateStatus(id, Constant.REPAIR_ORDER_STATUS_CANCELLED);
         return UnifyResult.ok();
+    }
+
+    public void sendAppMessage(String title, String content) {
+        PushBean pushBean = new PushBean();
+        pushBean.setTitle(title);
+        pushBean.setAlert(content);
+        boolean flag = jiGuangPushService.pushAndroid(pushBean);
     }
 }
