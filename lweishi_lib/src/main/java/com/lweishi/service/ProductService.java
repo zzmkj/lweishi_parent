@@ -79,6 +79,8 @@ public class ProductService {
     }
 
     public void deleteById(String id) {
+        //删除产品故障信息
+        productFaultService.deleteByProductId(id);
         productRepository.deleteById(id);
     }
 

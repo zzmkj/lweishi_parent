@@ -78,4 +78,8 @@ public class ProductFaultService {
     public List<ProductFault> findByIds(List<String> ids) {
         return productFaultRepository.findByIdIn(ids);
     }
+
+    public void deleteByProductId(String productId) {
+        productFaultRepository.deleteByProductId(productId);
+    }
 }

@@ -9,4 +9,6 @@ public interface ProductFaultRepository extends JpaRepository<ProductFault, Stri
     List<ProductFault> findByProductId(String productId);
 
     List<ProductFault> findByIdIn(List<String> ids);
+
+    void deleteByProductId(String productId);
 }
