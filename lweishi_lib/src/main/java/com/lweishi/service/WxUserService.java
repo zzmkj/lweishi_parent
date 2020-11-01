@@ -28,13 +28,15 @@ public class WxUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private static final String AVATAR = "http://qiniu.lweishi.com/a.png";
+
     public Optional<WxUser> checkUserIsExist(String openid) {
         return wxUserRepository.findByOpenid(openid);
     }
 
     public WxLoginVO login(String openid, String mobile) {
         Optional<WxUser> userOptional = this.checkUserIsExist(openid);
-        WxUser wxUser = userOptional.orElseGet(() -> this.register(openid, "用户" + mobile, mobile, "https://zzm888.oss-cn-shenzhen.aliyuncs.com/default.png"));
+        WxUser wxUser = userOptional.orElseGet(() -> this.register(openid, "用户" + mobile, mobile, AVATAR));
         String token = JwtUtils.getJwtToken(wxUser.getId(), wxUser.getName(), wxUser.getAvatar());
         return new WxLoginVO(token, wxUser.getName(), wxUser.getAvatar(), wxUser.getMobile());
     }

@@ -1,21 +1,17 @@
 package com.lweishi.wx.auth.controller;
 
-import com.lweishi.model.Banner;
-import com.lweishi.model.Brand;
-import com.lweishi.model.Issue;
-import com.lweishi.model.Product;
-import com.lweishi.service.BannerService;
-import com.lweishi.service.BrandService;
-import com.lweishi.service.IssueService;
-import com.lweishi.service.ProductService;
+import com.lweishi.model.*;
+import com.lweishi.service.*;
 import com.lweishi.utils.UnifyResult;
 import com.lweishi.vo.IssueVO;
+import com.lweishi.vo.SearchVO;
 import com.lweishi.wx.auth.service.WxProductService;
 import com.lweishi.wx.auth.vo.CategoryVO;
 import com.lweishi.wx.auth.vo.ProductInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -44,6 +40,9 @@ public class WxIndexController {
 
     @Autowired
     private IssueService issueService;
+
+    @Autowired
+    private TagService tagService;
 
     @GetMapping("/banner")
     public UnifyResult findBanner() {
@@ -75,5 +74,19 @@ public class WxIndexController {
     public UnifyResult findIssueDetail(@PathVariable String id) {
         Issue issue = issueService.findById(id);
         return UnifyResult.ok().data("result", issue);
+    }
+
+    @GetMapping("/tag")
+    public UnifyResult findTag() {
+        List<Tag> tagList = tagService.findAll();
+        return UnifyResult.ok().data("tagList", tagList);
+    }
+
+    @GetMapping("/search")
+    public UnifyResult productSearch(@RequestParam String keyword,
+                                     @RequestParam(name = "start", required = false, defaultValue = "0") Integer start,
+                                     @RequestParam(name = "count", required = false, defaultValue = "10") Integer count) {
+        SearchVO searchVO = productService.search(keyword, start, count);
+        return UnifyResult.ok().data("result", searchVO);
     }
 }

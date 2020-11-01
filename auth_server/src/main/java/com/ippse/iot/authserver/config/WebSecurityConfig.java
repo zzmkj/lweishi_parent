@@ -81,7 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.and().formLogin().loginPage("/login").defaultSuccessUrl("http://iot2.yunep.com/web/admin/index", true).failureUrl("/login-error").permitAll()//.defaultSuccessUrl("/", true)
 				.and().formLogin().loginPage("/login").failureUrl("/login-error").permitAll()//.defaultSuccessUrl("/", true)
 				.and()
-				.logout().logoutSuccessUrl("/").logoutSuccessHandler(logoutSuccessHandler)
+				.logout().logoutSuccessHandler(logoutSuccessHandler)
 				.and()
 				.csrf().disable().apply(qqLoginAuthenticationSecurityConfig);
 

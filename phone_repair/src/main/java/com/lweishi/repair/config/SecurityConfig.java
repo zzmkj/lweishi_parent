@@ -51,7 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .customUserType(OkUser.class, "ippse").and().and().exceptionHandling()
                 .defaultAuthenticationEntryPointFor(unauthorizedHandler, new AjaxRequestMatcher()).and()
                 .logout()
-                .logoutSuccessUrl(logoutUrl).deleteCookies("JSESSIONID").invalidateHttpSession(true)
                 .and()
                 .exceptionHandling().accessDeniedPage("/401");
     }

@@ -96,7 +96,7 @@ public class RepairOrderService {
 
         BeanUtils.copyProperties(repairOrderDTO, repairOrder);
 
-        repairOrder.setId(IDUtil.UUID().substring(0, 19));
+        repairOrder.setId(IDUtil.UUID().substring(0, 14));
         repairOrder.setStatus(Constant.REPAIR_ORDER_STATUS_WAITING);
         repairOrder.setCreateTime(LocalDateTime.now());
 

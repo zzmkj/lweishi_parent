@@ -11,11 +11,14 @@ import com.lweishi.utils.IDUtil;
 import com.lweishi.utils.ResultCode;
 import com.lweishi.vo.ProductFaultItemVO;
 import com.lweishi.vo.ProductFaultVO;
+import com.lweishi.vo.SearchItemVO;
+import com.lweishi.vo.SearchVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -41,9 +44,6 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-
-    @Autowired
-    private ColorService colorService;
 
     @Autowired
     private BrandService brandService;
@@ -154,5 +154,21 @@ public class ProductService {
         resultMap.put("result", result);
         resultMap.put("secondFaultIds", secondFaultIds);
         return resultMap;
+    }
+
+    /**
+     * 客户端（微信小程序）搜索产品
+     * @return
+     */
+    public SearchVO search(String keyword, Integer start, Integer count) {
+        PageRequest pageRequest = PageRequest.of(start, count, Sort.by(Sort.Direction.ASC, "sequence"));
+        Page<SearchItemVO> pageResult = productRepository.findByNameLike("%" + keyword + "%", pageRequest);
+        SearchVO searchVO = SearchVO.builder()
+                                    .total(pageResult.getTotalElements())
+                                    .count(pageResult.getSize())
+                                    .page(pageResult.getNumber())
+                                    .total_page(pageResult.getTotalPages())
+                                    .items(pageResult.getContent()).build();
+        return searchVO;
     }
 }
