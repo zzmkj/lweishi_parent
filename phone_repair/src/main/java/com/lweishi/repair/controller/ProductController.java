@@ -38,7 +38,7 @@ public class ProductController {
 
     @GetMapping("/all")
     public UnifyResult findAll() {
-        List<Product> productList = productService.findAll();
+        List<Product> productList = productService.findAllValid();
         return UnifyResult.ok().data("productList", productList);
     }
 
