@@ -22,7 +22,7 @@ public class ColorDTO {
     private String id;
 
     /**
-     * @FiledName: 颜色名称
+     * @FiledName: name
      * @Description: 颜色名称
      * @Example: 黄色，蓝色...
      */
@@ -30,13 +30,10 @@ public class ColorDTO {
     private String name;
 
     /**
-     * @FiledName: 颜色图标
-     * @Description: 颜色图标
+     * @FiledName: colorHex
+     * @Description: 颜色值
      */
-    @NotBlank(message = "图片不能为空")
-    private String icon;
-
-    @NotBlank(message = "选中图片不能为空")
-    private String iconActive;
+    @NotBlank(message = "颜色值不能为空")
+    private String colorHex;
 
 }

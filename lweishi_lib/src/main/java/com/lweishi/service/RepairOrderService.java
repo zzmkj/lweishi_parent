@@ -8,6 +8,7 @@ import com.lweishi.model.*;
 import com.lweishi.repository.RepairOrderRepository;
 import com.lweishi.utils.BeanNullUtil;
 import com.lweishi.utils.IDUtil;
+import com.lweishi.utils.RandomUtil;
 import com.lweishi.utils.ResultCode;
 import com.lweishi.vo.FaultVO;
 import com.lweishi.wx.WxTemplateService;
@@ -203,7 +204,8 @@ public class RepairOrderService {
         if (order.getStatus().equals(Constant.REPAIR_ORDER_STATUS_WAITING)) {
             throw new GlobalException(30004, "上传图片失败！");
         }
-        String imageUrl = uploadService.uploadImage(file);
+        String fileName = RandomUtil.getRandomCharacterAndNumber(10) +  ".png";
+        String imageUrl = uploadService.uploadImage(file, fileName);
         if (type == 0) { //type为0的时候是 维修前图片
             order.setImageBefore(imageUrl);
         } else if (type == 1) { //type为1的时候是 维修后图片

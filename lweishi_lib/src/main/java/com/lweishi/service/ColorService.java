@@ -4,9 +4,7 @@ import com.lweishi.model.Color;
 import com.lweishi.dto.ColorDTO;
 import com.lweishi.exception.GlobalException;
 import com.lweishi.repository.ColorRepository;
-import com.lweishi.utils.BeanNullUtil;
-import com.lweishi.utils.IDUtil;
-import com.lweishi.utils.ResultCode;
+import com.lweishi.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import sun.plugin2.util.ColorUtil;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -30,6 +29,12 @@ public class ColorService {
 
     @Autowired
     private ColorRepository colorRepository;
+
+    @Autowired
+    private ColorUtils colorUtils;
+
+    @Autowired
+    private UploadService uploadService;
 
     public List<Color> findAll() {
         Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
@@ -48,7 +53,11 @@ public class ColorService {
     }
 
     public void deleteById(String id) {
+        Color color = findById(id);
         colorRepository.deleteById(id);
+        //删除远程图片【七牛云】
+        uploadService.deleteImage(color.getIcon());
+        uploadService.deleteImage(color.getIconActive());
     }
 
     public Color save(ColorDTO colorDTO) {
@@ -56,6 +65,19 @@ public class ColorService {
         BeanUtils.copyProperties(colorDTO, color);
         color.setId(IDUtil.UUID());
         color.setCreateTime(LocalDateTime.now());
+
+        //根据十六进制颜色值生成图标图片和选中图片
+        String colorHex = color.getColorHex();
+        String randomId = RandomUtil.getRandomCharacterAndNumber(10);
+        String fileName = randomId + ".png";
+        String activeFileName = randomId + "-active.png";
+
+
+        String icon = colorUtils.paintInActiveImg(fileName, colorHex);
+        String iconActive = colorUtils.paintActiveImg(activeFileName, colorHex);
+
+        color.setIcon(icon);
+        color.setIconActive(iconActive);
         return colorRepository.save(color);
     }
 

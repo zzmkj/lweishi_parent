@@ -2,6 +2,7 @@ package com.lweishi.service;
 
 import com.google.gson.Gson;
 import com.lweishi.exception.GlobalException;
+import com.lweishi.utils.RandomUtil;
 import com.lweishi.utils.ResultCode;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
@@ -10,6 +11,7 @@ import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,12 +49,11 @@ public class UploadService implements InitializingBean {
     @Autowired
     private Auth auth;
 
-    public String uploadImage(MultipartFile file) {
-        String key = getRandomCharacterAndNumber(10) + ".png";//生成随机文件名
+    public String uploadImage(MultipartFile file, String fileName) {
         String responseUrl = "";
         try{
             byte[] localFile = file.getBytes();
-            Response response = uploadManager.put(localFile, key, getUploadToken());
+            Response response = uploadManager.put(localFile, fileName, getUploadToken());
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             responseUrl = responseUrl + url + putRet.key;
         }catch (Exception e){
@@ -74,24 +75,6 @@ public class UploadService implements InitializingBean {
             throw new GlobalException(30005, "删除图片失败！");
         }
 
-    }
-
-    public static String getRandomCharacterAndNumber(int length) {
-        String val = "";
-        Random random = new Random();
-        for (int i = 0; i < length; i++) {
-            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num"; // 输出字母还是数字
-            // 字符串
-            if ("char".equalsIgnoreCase(charOrNum)) {
-                int choice = random.nextInt(2) % 2 == 0 ? 65 : 97; // 取得大写字母还是小写字母
-                val += (char) (choice + random.nextInt(26));
-                // int choice = 97; // 指定字符串为小写字母
-                val += (char) (choice + random.nextInt(26));
-            } else if ("num".equalsIgnoreCase(charOrNum)) { // 数字
-                val += String.valueOf(random.nextInt(10));
-            }
-        }
-        return val;
     }
 
     @Override

@@ -29,5 +29,7 @@ public class Color {
 
     private String iconActive;
 
+    private String colorHex;
+
     private LocalDateTime createTime;
 }
