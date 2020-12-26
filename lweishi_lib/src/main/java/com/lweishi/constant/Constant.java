@@ -12,6 +12,9 @@ public class Constant {
     public static final Boolean BRAND_VALID = true; //品牌状态启用
     public static final Boolean BRAND_INVALID = false; //品牌状态停用
 
+    public static final Boolean ACTIVITY_VALID = true; //活动状态启用
+    public static final Boolean ACTIVITY_INVALID = false; //活动状态停用
+
     public static final Boolean PRODUCT_VALID = true; //手机产品状态启用
     public static final Boolean PRODUCT_INVALID = false; //手机产品状态停用
 

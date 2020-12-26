@@ -32,6 +32,7 @@ public class RepairOrder {
     @Column(name = "id", length = 32, nullable = false, unique = true)
     private String id;
 
+    private Long orderNo; //订单编号
     private String productId; //产品ID
     private String productName; //产品名称
     private String productImage; //产品图片

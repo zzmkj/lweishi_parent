@@ -1,6 +1,7 @@
 package com.lweishi.app.controller;
 
 import com.lweishi.service.UploadService;
+import com.lweishi.utils.RandomUtil;
 import com.lweishi.utils.UnifyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,9 @@ public class UploadController {
 
     @PostMapping("/image")
     public UnifyResult uploadImage(MultipartFile file) {
-        String imageUrl = uploadService.uploadImage(file);
+        String randomId = RandomUtil.getRandomCharacterAndNumber(10);
+        String fileName = randomId + ".png";
+        String imageUrl = uploadService.uploadImage(file, fileName);
         return UnifyResult.ok().data("imageUrl", imageUrl);
     }
 }

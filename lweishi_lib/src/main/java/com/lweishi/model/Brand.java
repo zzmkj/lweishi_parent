@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Author geek
@@ -48,4 +49,9 @@ public class Brand {
      */
     private LocalDateTime createTime;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "coupon_category",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "coupon_id"))
+    private List<Coupon> couponList;
 }
