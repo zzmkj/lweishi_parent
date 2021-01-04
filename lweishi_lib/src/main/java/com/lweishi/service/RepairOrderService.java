@@ -6,10 +6,7 @@ import com.lweishi.dto.RepairOrderDTO;
 import com.lweishi.exception.GlobalException;
 import com.lweishi.model.*;
 import com.lweishi.repository.RepairOrderRepository;
-import com.lweishi.utils.BeanNullUtil;
-import com.lweishi.utils.IDUtil;
-import com.lweishi.utils.RandomUtil;
-import com.lweishi.utils.ResultCode;
+import com.lweishi.utils.*;
 import com.lweishi.vo.FaultVO;
 import com.lweishi.wx.WxTemplateService;
 import lombok.extern.slf4j.Slf4j;
@@ -100,6 +97,7 @@ public class RepairOrderService {
         repairOrder.setId(IDUtil.UUID().substring(0, 14));
         repairOrder.setStatus(Constant.REPAIR_ORDER_STATUS_WAITING);
         repairOrder.setCreateTime(LocalDateTime.now());
+        repairOrder.setOrderNo(OrderUtil.makeOrderNo());
 
         String productId = repairOrderDTO.getProductId();
         Product product = productService.findById(productId);
@@ -157,8 +155,13 @@ public class RepairOrderService {
         repairOrderRepository.save(order);
     }
 
-    public List<RepairOrder> findByWxUserId(String wxUserId) {
-        return repairOrderRepository.findByWxUserId(wxUserId);
+    public Page<RepairOrder> findByWxUserIdAndStatus(String wxUserId, Integer status, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createTime").descending());
+
+        if (status == 4) {
+            return repairOrderRepository.findByWxUserId(wxUserId, pageable);
+        }
+        return repairOrderRepository.findByWxUserIdAndStatus(wxUserId, status, pageable);
     }
 
     public Page<RepairOrder> findByStatusAndApp(Integer status, Pageable pageable, AppUser appUser) {

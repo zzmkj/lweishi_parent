@@ -1,21 +1,24 @@
 package com.lweishi.wx.auth.controller;
 
+import com.lweishi.bo.PageCounter;
 import com.lweishi.constant.Constant;
 import com.lweishi.dto.RepairOrderDTO;
 import com.lweishi.model.RepairOrder;
 import com.lweishi.model.WxUser;
 import com.lweishi.service.RepairOrderService;
+import com.lweishi.utils.CommonUtil;
 import com.lweishi.utils.UnifyResult;
 import com.lweishi.wx.auth.message.JiGuangPushService;
 import com.lweishi.wx.auth.message.PushBean;
 import com.lweishi.wx.auth.utils.WxUserResolve;
+import com.lweishi.wx.auth.vo.Paging;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @ClassName WxOrderController
@@ -47,11 +50,17 @@ public class WxRepairOrderController {
         return UnifyResult.ok().data("order", order);
     }
 
-    @GetMapping("/all")
-    public UnifyResult findAll(HttpServletRequest request) {
+    @GetMapping("/by/status/{status}")
+    public UnifyResult findAll(@PathVariable Integer status,
+                               @RequestParam(name = "start", defaultValue = "0") Integer start,
+                               @RequestParam(name = "count", defaultValue = "10") Integer count, HttpServletRequest request) {
         WxUser wxUser = wxUserResolve.resolveWxUser(request);
-        List<RepairOrder> orderList = repairOrderService.findByWxUserId(wxUser.getId());
-        return UnifyResult.ok().data("orderList", orderList);
+        // 转换成分页对象
+        PageCounter page = CommonUtil.convertToPageParameter(start, count);
+
+        Page<RepairOrder> orderPage = repairOrderService.findByWxUserIdAndStatus(wxUser.getId(), status, page.getPage(), page.getCount());
+        Paging<RepairOrder> orderPaging = new Paging<>(orderPage);
+        return UnifyResult.ok().data("result", orderPaging);
     }
 
     @GetMapping("/{id}")

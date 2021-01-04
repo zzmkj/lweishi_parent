@@ -6,11 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface RepairOrderRepository extends JpaRepository<RepairOrder, String>, JpaSpecificationExecutor<RepairOrder> {
-    List<RepairOrder> findByWxUserId(String wxUserId);
+    Page<RepairOrder> findByWxUserId(String wxUserId, Pageable pageable);
+
+    Page<RepairOrder> findByWxUserIdAndStatus(String wxUserId, Integer status, Pageable pageable);
 
     Page<RepairOrder> findByStatus(Integer status, Pageable pageable);
 
