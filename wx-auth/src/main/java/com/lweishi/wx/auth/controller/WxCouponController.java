@@ -4,7 +4,6 @@ import com.lweishi.enums.CouponStatus;
 import com.lweishi.exception.http.ParameterException;
 import com.lweishi.model.Coupon;
 import com.lweishi.model.WxUser;
-import com.lweishi.utils.UnifyResponse;
 import com.lweishi.utils.UnifyResult;
 import com.lweishi.wx.auth.service.CouponService;
 import com.lweishi.wx.auth.utils.WxUserResolve;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -90,5 +90,14 @@ public class WxCouponController {
             CouponBrandVO vo = new CouponBrandVO(coupon);
             return vo;
         }).collect(Collectors.toList());
+    }
+
+    @GetMapping("/myself/available/with_fault/{faultId}")
+    public UnifyResult getUserCouponWithFault(@PathVariable String faultId, HttpServletRequest request) {
+        WxUser wxUser = wxUserResolve.resolveWxUser(request);
+
+        Map<String, List<CouponPureVO>> couponsMap = couponService.getMyAvailableCouponsWithFault(wxUser.getId(), faultId);
+
+        return UnifyResult.ok().data("availableList", couponsMap.get("available")).data("disableList", couponsMap.get("disable"));
     }
 }
